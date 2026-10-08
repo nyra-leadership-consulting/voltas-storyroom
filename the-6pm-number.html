@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The 6 PM Number</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one phone-width column. Late-evening finance floor: deep navy, an amber clock, each team's colour as its identity. */
+:root{
+  --bg:#0c131b; --panel:#141e29; --panel-2:#1b2836; --line:#2a3a4b; --ink:#e8eef4; --muted:#93a4b5;
+  --amber:#f2a93b; --team:#2563a8;
+  --blame:#c8432b; --explain:#d69a1f; --own:#2f9a63;
+  --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.wrap{max-width:560px;margin:0 auto;padding-inline:18px;padding-block:18px 40px;display:grid;gap:14px}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.08;text-wrap:balance}
+p{margin:0}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+button,input{font:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+.brand{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand b{font-family:var(--display);font-size:20px;letter-spacing:.04em}
+.brand span{font-family:var(--mono);font-size:12px;color:var(--amber)}
+.hero{padding:26px 20px;border-radius:16px;background:var(--panel);border:1px solid var(--line);display:grid;gap:10px}
+.hero .clock{font-family:var(--mono);font-size:44px;font-weight:700;color:var(--amber);letter-spacing:-.02em}
+.hero h1{font-size:38px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;color:var(--muted)}
+.field{display:grid;gap:6px}
+.field input{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:12px 14px;font-size:18px;width:100%}
+.btn{border:0;border-radius:10px;padding:13px 18px;font-weight:700;font-size:17px;cursor:pointer;background:var(--amber);color:#1a1205}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink);font-weight:600}
+.err{color:#ff8f7a;font-size:14px;min-height:20px}
+
+.id{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--panel)}
+.id .band{background:var(--team);padding:18px 18px 16px;display:grid;gap:4px;color:#fff}
+.id .band small{font-family:var(--mono);font-size:12px;opacity:.85}
+.id .band h2{font-size:34px}
+.id .band .tbl{font-family:var(--display);font-size:20px;font-weight:700}
+.id .body{padding:16px;display:grid;gap:12px}
+.fact{border-left:4px solid var(--team);background:var(--panel-2);border-radius:0 10px 10px 0;padding:10px 12px}
+.kpi{display:flex;gap:8px;align-items:center;font-weight:600}
+.kpi i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--bg);background:var(--amber);border-radius:4px;padding:1px 6px}
+.wait{text-align:center;padding:14px;border:1.5px dashed var(--line);border-radius:12px;color:var(--muted)}
+
+.codebar{display:grid;grid-template-columns:1fr auto;gap:8px}
+.codebar input{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:12px 14px;font-family:var(--mono);font-size:18px;text-transform:uppercase;letter-spacing:.08em;min-width:0}
+
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.tabs button{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.tabs button[aria-current="true"]{background:var(--team);border-color:var(--team);color:#fff}
+
+.round .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.round .top .clock{font-family:var(--mono);color:var(--amber);font-weight:700;font-size:22px}
+.round h2{font-size:30px}
+.since{font-size:15px;color:var(--muted);border-left:3px solid var(--line);padding-left:10px}
+.headline{font-size:18px;font-weight:500}
+.hit{display:inline-block;background:var(--amber);color:#1a1205;font-weight:700;font-size:13px;border-radius:6px;padding:3px 9px;justify-self:start}
+.brief{font-size:17px}
+.qs{margin:0;padding-left:22px;display:grid;gap:6px}
+.cfo{font-family:var(--display);font-size:24px;font-weight:700;line-height:1.15}
+.cfo small{display:block;font-family:var(--body);font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.rate{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rate button{border:0;border-radius:12px;padding:16px 6px;font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.04em;color:#fff;cursor:pointer}
+.rate .b{background:var(--blame)} .rate .e{background:var(--explain)} .rate .o{background:var(--own)}
+details summary{cursor:pointer;font-weight:600}
+details .fact{margin-top:8px}
+
+.overlay{position:fixed;inset:0;z-index:50;display:grid;place-items:center;text-align:center;color:#fff;padding:24px}
+.overlay b{font-family:var(--display);font-size:clamp(64px,22vw,140px);font-weight:800;letter-spacing:.04em;line-height:1}
+.overlay span{display:block;font-size:16px;margin-top:14px;opacity:.85}
+
+.final .q{font-family:var(--display);font-size:28px;font-weight:700;line-height:1.1}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{border:1px solid var(--line);background:var(--panel-2);color:var(--ink);border-radius:999px;padding:8px 16px;font-weight:600;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--amber);color:#1a1205;border-color:var(--amber)}
+textarea{width:100%;min-height:90px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:12px;font:inherit;resize:vertical}
+.foot{text-align:center;font-size:13px}
+.foot button{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><b>THE 6 PM NUMBER</b><span id="whoTop"></span></div>
+
+  <!-- JOIN -->
+  <section id="vJoin" class="wrap" style="padding:0">
+    <div class="hero">
+      <div class="clock">4:00 PM</div>
+      <h1>Can your function protect the business outcome?</h1>
+      <p class="muted">The CFO needs one number she can stand behind by 6 PM. Five finance functions hold a piece of the answer.</p>
+    </div>
+    <div class="panel">
+      <div class="field"><label class="label" for="inName">Your name</label><input id="inName" autocomplete="name" placeholder="First name"></div>
+      <div class="field"><label class="label" for="inNum">Your number</label><input id="inNum" inputmode="numeric" placeholder="1 to 25"><span class="muted" style="font-size:14px">The facilitator will ask the room to count off. Enter the number you called out.</span></div>
+      <div class="err" id="joinErr"></div>
+      <button class="btn" id="joinBtn">Start</button>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="vPlay" hidden style="display:grid;gap:14px">
+    <div class="tabs" id="tabs"></div>
+    <div id="view"></div>
+    <div class="panel" id="codePanel">
+      <label class="label" for="inCode" id="codeLabel">Enter the code on the big screen</label>
+      <div class="codebar"><input id="inCode" autocomplete="off" autocapitalize="characters" placeholder="CODE"><button class="btn" id="codeBtn">Open</button></div>
+      <div class="err" id="codeErr"></div>
+    </div>
+    <div class="foot"><button id="resetBtn">Not you? Change name or number</button></div>
+  </section>
+</div>
+
+<div class="overlay" id="overlay" hidden role="button" tabindex="0" aria-label="Close"><div><b id="ovWord"></b><span>Hold your phone up. Tap to close.</span></div></div>
+
+<script>
+const TEAMS = [{"id": "upbg", "name": "UPBG F&C", "table": 1, "color": "#2563a8", "role": "You own UPBG's month-end close: getting the business unit's numbers right and ready for review.", "kpi": "Accurate business forecast"}, {"id": "cf", "name": "Corp Finance", "table": 2, "color": "#1f7a4d", "role": "You own the leadership pack that goes to the CFO tonight.", "kpi": "Hit the 6 PM reporting deadline"}, {"id": "ss", "name": "Shared Services", "table": 3, "color": "#b7791f", "role": "You own invoice processing and the query queue for every business unit.", "kpi": "95% query turnaround"}, {"id": "pay", "name": "Payroll", "table": 4, "color": "#6b46c1", "role": "You own payroll and the month-end incentive provision.", "kpi": "Zero payroll errors"}, {"id": "ifc", "name": "Internal Financial Control", "table": 5, "color": "#b4361f", "role": "You own month-end controls and sign-off on manual adjustments.", "kpi": "100% control compliance"}];
+const PEOPLE = {"upbg": ["The UPBG business head expects this month's profit to land at about ₹52 crore.", "Karan in your team sent the accrual file to Shared Services on Monday. The template had changed, and you suspect the cost-centre codes were left out.", "Karan's working sheet has the cost-centre codes for most of the stuck invoices, worth ₹3.1 crore. They could be sent across in 15 minutes.", "About ₹0.5 crore of the expected expenses has no invoice yet. The vendor bills next week. The only evidence is an email from the business head.", "The business head approved a new sales incentive slab two weeks ago. You believe someone emailed it to Payroll."], "cf": ["The leadership pack is due to the CFO at 6 PM. Your name is on it.", "UPBG's numbers missed the noon cut-off, so the pack is using last week's forecast: ₹53.5 crore.", "The books currently show UPBG profit at ₹57.0 crore. Nobody has explained the gap between the books and the pack.", "The CFO told you privately that tonight she can accept a range instead of a single figure, as long as the assumptions are written down clearly.", "Sana in your team labelled the ₹53.5 crore as \"final\" in the draft pack. It is really a placeholder."], "ss": ["Your query turnaround this month is 96%. The target is 95%.", "31 UPBG invoices worth ₹3.1 crore are sitting in the query queue because their cost-centre codes are missing.", "Meera in your team sent the queries to a shared UPBG mailbox on Tuesday. Nobody on either side followed up.", "Three UPBG invoices worth ₹0.6 crore are fully processed but stuck in \"on hold\" status after Tuesday's system update. One click releases them.", "If you fast-track UPBG tonight, two other business units' queries will miss today's turnaround target."], "pay": ["Your team has had zero payroll errors for eleven months running.", "This month's incentive provision for UPBG sales was calculated on the old slab.", "Deepak in your team received the new incentive slab by email from UPBG ten days ago. It never came through the official workflow, so he didn't use it.", "On the new slab, the UPBG incentive provision would be ₹0.8 crore higher.", "Policy: Payroll can only use incentive slabs that arrive through the approved workflow."], "ifc": ["Every manual adjustment above ₹25 lakh needs supporting documents and your sign-off.", "Internal Audit will review this month-end trail next week.", "Corp Finance hinted this afternoon that they may need a \"top-side\" adjustment tonight to make the number work.", "A provision without an invoice is allowed if there is an estimate memo signed by the business head and reviewed by IFC. It takes about 15 minutes.", "Last quarter, an undocumented adjustment approved under time pressure became an audit finding."]};
+const OBJECTIVE = "Help the organisation give the CFO one number she can stand behind by 6 PM.";
+const BLOBS = [{"s": "Qy3p/N62h4UmDoqCb0PUow==", "i": "ciWlGvVOtXRRW+Wg", "c": "3ijl9EKVt1hbsdziS1zLYmyXOlPrsz9+RdJzmKaKL3K2nhgD3kicCnHhK/htwH4jTEvgWl0RbwWB1lh/6Nfvni7w3LlNIJhpPnTEAM82h+W09gSAUCxvggPy4j66xvG94CGEWI84FQLEonoGOHnv2I+MYbd7wSIBn3PCyq2dYXk+bSJHRxB0JVoW6Po4aroQMVGh+NSbX7k80MFYbMDNz5TyHCuNFrc347hMUriRmQeG6yduaOTpplGPcvGnGO5HKak3/dVERT2Yc+B0+g9NO9XbWTjVWrVjLhPIfM++E0Eenl5t10BF1i7jshCWDm/tIBMhLhJ/4558LYWcbU4EdvohUMvVybj/Jq39UduU8oi6hUzDbRyDV+iRoOZQEd/Cv2XU8f4/pyaKuTsgOF6uxdIKK+nW6TO3Usm9fycynXuaN/9XlTAiYcrARxXFJT7ABlu3jDk+vrY2wfGaTAjR3KWdzmVho5aRpcG8B2uzPQhGanrGxICc3eAoeTyxL/axq+QDffpG5GwSDCcYU419jft1OFp8eKCOVXEqzlAZ8UpzoRj/oqniC7SM6n4jdgrnY3HftpUAJ2rJhv2uhwBmnTiUo9aLauNR/t3ua45GBwojCLNYXo2z/URb+0eeAxjbLLTuadVJvZz4twCg1YX+CFnF2CpFbDqti6y+5MU/mAw4kiqFegKFadpC1QguMAyU3wN8Lpn2RxucuA4KVDjsDJgZgivktEaf03MpS1/me8Cahd4aEirsBk6bjagjKIrpgRCJaJO1SpDL9WckryjGO0mEpaiE1xcLbu/73CsmAIXXHMgEDtVZHirXqcihGnpnyuXh78ep11TZhX3bc2R7Z9axrAmiklQrXK9HvNGhuQBDCJLat3oLTWCg19nizg8ei619/LBYshmpaNnCu/YV9UnUGynbC4IZ/iECyGHemR5P2BpShsIbvolgGVG2oLVZ4vv951IDPKSIlNL3Z1QcuSw/faq2NZBO7dPRt4orfjZG20FwDr7jwB8Fa8EmqQYkWQhOMbDuvRUUkiTi37baM90uqFyHj9t+cswDzh3MECCj9BTz9FzfGVqw7w3mvJoCQrghiuyQMP6xjqz2ISF3vRoINgEAvtH4IOD4pDJKobKcVfdzxr2sTz9Hm5pJe8CW3jFRB3rc11GdCLdoYhcT+SX6DCrlc0/xfSLz5gIUqCFXBqTLmy4r9Mcw9izv26bjtMrKGOIVZgJITbIJ+fWus11FyxhCs3GdPJeXsliDSG4JWsUG1KyomeQ7/pNUszJY9fNEQ4xM2wvpr0p37W9o+f1RnUKcjvS+ant1CQDKAjB/UnxMSbBttB7JGLznfUYE0gKO7SkqA+GSZSkDEoKwnQB0qNnhde/MH9AGkydO7KYzDkDjEugyNqmIGoomnMRmZ4qc/AJTiiWehH56pEXwtH6x3RRVtPVzzE1ocJGqZdyJlfjxg+Jw88pt1Fy7Xze0+R85JIj/8i+zlX8vvyg0kCxImT1e5N/kfEf7b3mDHkQwm0SzaHTGvp6tBTS8SgLx4KOjeQ==", "n": 1}, {"s": "Aq91WtxZsArb2uUF2FL/IQ==", "i": "rDUjMfL0u9yblMnP", "c": "1+uU4+hFshy6zE6Mpjl5r+b5bU8DSCsd9jI+rFd3SMEUWxKWSYArrhPUz+OyuF8cyPpb7EWJiaLbBoFTphgViHf4LeO3NBQcpc5QHTt3InWnjsvXhw0mZ3CedpA1nZ/Re1Nny+onaXuQYll/k5zdEXmgfVP+iJOm7qX6fHg6mzyacPJfv3Gchn4Z9+ckjVJ7x/X3xstME83nnxs3c9O3dQT4jUhe5h7NuYLueOfE5vR8AXEavuj+eSXDxuMZtsOw+D9Yb7mrTGgHPV3oWOT1O94YGknqhj6HKien5amyhPjMQgyjT3OiyOQ1ACPEkpaU8CKUqc7jFXtCDBCY8HuCaJKpO0lt6ypFzLuF14C5dbvLMQnHfKlyxs/8W1XFvFs5rWD0dCgodNot7Umeo5KpC1FwWAppm7wiUkxW97Oict2p0JUYSPkJCcrq5iFfeVH0Nso+dAzIv5u/79k9yE3aGF8Ig9SG9ojL429JQZCkay/rM8P0W9dHqgvqwyQyX/9SXp5en2pYD2f3CXVYIgnGG0n6r70aR037jz+yP4cLAqjdgoD8jTGM5Uk9bAwtTB6lkUoK2hFhpm4r20pMFPWLNImkj93SfzBxxLI88S3CtYw9n3nVEkqjRABgH5QxRGf4LqzqXF702Rmrhn6SOf4zxdLyC53A90TIWivw41Wlf7/l2aw2JgAAlycuK29WC4uH7eSO4NTnvHXAGgovUVGzAPd152P4RTkUghJi0tfb8BjQrczl+vEE/94G74iGQoel7yVoG4e446HxRGHk6aN0Z4viu/f6JprO/JYsJFw4rw+QMYrWxb3LrDJSivPXRCiBJUhpzBTw4uRr7LSP/mZIiF5IwaNc1GZhueATa6YiBFEPy3HnqwjoVXy/IWLFoStccsBf5x3cSlEPK9PlbN/zx4dTSgJjnoXwZIveKUyq/CCwFk+Y2vyWinXIzGkLMhMInv3ZgyMARvZY0KviYLd9lNhWgaMDrd96lDMxkrhFGp5I8gA/VUJD+5SM/XNIpNdasdUaFc8ERZCh94uh8g7q0Tg25bP1S4xdtDKwM5F9y+tailkZSueL/PARhIcHx2qnV0SxZi6UgWoXLjW4fs784ROEqc0yDK5Okv6xffBoSL+03YdnhdyyHYb5pT44Gdw+Bxjy1lyPq3ZVoAk0P4rbZOsZ7Hd49zj5v5IVY58mM3JYayvhfG91YUba5xIwyzH3TjCzrHwpKkftacwTFeMP4qVABDPDc0n3QU2UJ/n1cHxS9H/uQ4uJQJdlNZP3kYuv0rm6TQ9pYTw+iqixRthDMIsUgNhMUxYY0mWlxIMHab8ebq+4eiXpT4SM4Fkpq3cmUK89JZFMUqVHy0ow2kLgHSxYJan9GbcVVv64oCnd/4tVHKMO4tBp+qWWr0daSdOY6B16XdjKOuF5YQfo3QFHBPZI49CcEtvBAKkeO4Qn2XmdSX7h+K6BWqT1F+6GOGL4b0ePfPue41P8/0dAIDYLIYiGDrc/peq+k0qIQM/1mWamqocNGtplJ7WMJqjx6Swv+W6ZpsmZDxctgFfVPVXQZB6JcXHTAlT01S4iWzIrrNbt1SFrkdyRSoGSUdXHih853xXBbhDL3zX414ChTkTmnJD6wf0hRYLVyQbbDnaUL4U4lT7ASyMiYjd8", "n": 2}, {"s": "HjWfM7DPp/5NeUXUE1FCHw==", "i": "BoDwS2yI7wklD+q+", "c": "RNRISWccvIsfMRAar8uNY6e6s533s/Opt0NYIo3bduz6BKb/8C+Oiv4G3c+uD5KBbJ7IA7ZHPp0vQZ7rh0hgB7Q2BzympS9r0v5mf817MwHTatX91qSCIMvYqYeEErs/EyhRYSGPASRGZdanyFNKJMAmzhDfHqRyPZOJ0Ya0bBG6hxz4KpEGm1ig1dQCrAwqyJD+KqXrPEU6BxgrcQxu2ty8avCa9wdcZk56EWrtj7WqUhTGeEQvDt4jF+PVfMDSz2G4asaTvajeTW0LDoJzUq7QSLScmb4YvWJ7of6rB3dmoBoolzUznADGa8ZeSde34stD2NYlOfzTGmv3cBRZseAcE3S/5CB2wQbXO2FsYjKp18gIgK6s2WK9K83vrOCFZaaEnAopKiGLDdFF/dKFup+TaN/vHWUzJf/Gvd6uedsGeBgMZ7vtsS5FRojjsW+TRo5wunNAUIXe4PcnX/dxf/5QSXJTWOne7eYRJIHLgRv49be44+wGn3PELuZhEXUxpJtb1JBd7cv29E6d8zaH/I3pAv+PATy87H9d7ZJfrucU7dyHFfNXWTBoCQkhmrO5rBr7OCa3ZynQm/uJCY7cQchLlnIgfSJedH3va+uo7Rqcuy20Ft3/Fhmqg/uALJb0Cps+2wFhEGFj43qLkL1Xg1I/PqRyxrvhObj85hNDwsPyRzbO9qbkr/8pwr2w2u3L7+Rc1FOZm/PkXdsO5qOlTx/cSROfdxahT6FESuXzue7fdDyi/EL6DGlXq752C8A9cJZPNzdYpgJ0RHjyyCQxvAh0cSXAmozxTGwPZQPhpk8Bgi++hP+RwdvybZueurmY3XNcA6XpkRh6pghPsFoQsiV2ar8jl3DSHx3Xr1wIQecm2pTtQsfq/cpDZ+0OJ6RuZKM7Nt39yO6QZKcdt9tXLQzx9xC5qmodSPlt439UB4xbaGtwDmgN2CmL6TTqJB+r6iuFIGDsNQWKtQHVguP/qASWAEExnKzfhGPlSJn4nIAddTLGs40hP7IIJUxflmFGUPxVT9qpT9/qdCgjof0FDhG9/TFHSMrpy+WJnBnZtFophiGURjMbdn+BYBKenInfWhlNJ3NmQoxaXg2LRk16CVSBljVM4niVMwhTtIvnPgyTqjrErV6EUrQngXN1QPg4xnPWSf1//atY/sPQDmtoX2mlZRI38iJCTg5qF/FAXECChkvqEVlnCj+OMH0XCcNb56czUyxRggxrBRDz/p2KwmfNEtyGv+wnEA+1r9vRJEursImrNsPK/Mm9hkt8C6axeuzs7IFdqn+2APDmM7Ct1j7RBrS3jURMau5B+Dg3qs62EffxYgpniSyfr4uRs6hkPrraA2etDJOSl3CLmumLoJ5crkhbaAj8DOFGE5o7SUv/2ScRgQ8lnC67OHMLiKDopNgN3ABm4UfEBKly9EPQPy+OYF3XRLKvhzj3hxAgDqot7l9Dj3DoGuK2ApUBsBiCPY5V2Ins1X2srK7S5hnpH4dsk/gyso/MGcUZI1StlKPAfZPgzMXlilePkYspGHyxp4vtUiFOQOQsFUrcVSybvFQ=", "n": 3}, {"s": "EunY+NBfjGiyIWX20M1Khw==", "i": "yuHlh+t5XLze9Evh", "c": "05QLlWwL0Fqn8wf0mYNxVwKxxJbFyrNL6x0+CliVsx1c13tGPAHzUMBstx/EKIJ/izSAClPgcxWCRDqXuFgcLnZytggarfIKKIWXAA87GdwlGvpjcFKAhyohPgupmEkYjKThbAs/9vL5ZopJfgpJb2qll4Lb9KC/q07vSmgPCRLCbHNg4KjNYhmve78KhMVcClJM237yB2rr/0c4jKweV/ImeKToIt422kD6WdS0/cmdvjis4i7GCUTN89QajfeeHyIkqlrcSaDtPFkHKuz9BZBi6FhcWGvacPa6zV7IOKiNli4+rZvkaEE7vH43KV8LmxS6l+RWLeKm42mpztr+SXG/69f9OKs0+QmOky7GZ/DXZfI7q340Jm4FbyTiBnnzO5DdoHk798f8Ffjz8cEZxEz0z78Df8oczZ/sxqeXdr13xSi0F/EbSNR0M1gHrbVv0OPjHVIUADBajcMC2aBMrgTobOjMufUiqqMzOcyXXXs2RoRcx39cX2+QzdmihmIDl9u2YnEOS7yX7WBg9xOdBT78OXT653h5MdfFHNlJSxJYtjQO+q8u4DxUOzuyWgt4W8HmCvT+JE1K1EdYuVbhK9SCtet1h0h4eJR13bke8a1uj9ljRzhKJm0nyjeirm2Alw0/xMgg+Tq4Wu+sG4293nihbBj8a9EmzqJxwhtPZGGrXaUfvIrRG4LnZAaas/Te1caZ/sKNb4mCzfvzbvbSyW4SupkTIgvF8SZKjq1fHTczgpQRRl+VFrU2tFNKJumO6zZ4i8xro9eRqcXk4J4f9u8xZFxu5QSbJ8s0S7zjeozdsfO5HuziAD9r+OjzKfTr78oaCbMKQy6Yt0WxYyUCypAO9l57LHdPgk0PDGOZAtIobI+PTC7S1bSfo3uXHBEzWihNuen8+i9LxiWSyluBT7guYbUfr4063MFZO9Q5fb08BFZWLSdz3dFKGVp8A9XQkzyjCBe0dNuBsjdlvDTy1ejNv3JbxDonva1dRX+HBY5unUHcPgIcba8cu05rB3bHXtudZchfkVPbr9XDcFg9n+hhi63eLTDMfYGPqEOLISnpHoex5MGMlliqwJnANm5DaDVQU5gWwMZ1LNEy2wjK2FgzS2wqG5bkcQH/kzu9G5ehxa9aOaTWKnNkiFforz/VvPCxkj90NQclzs9Jy3xex0nU4rD4sj1RLtHy1hEv3+wfaQMiTorZAkjESMFxOSgx8OSOjnpN1i0x3ngWMKw4IDVeBbBXrVtrzaMw+GybtLfGvKQD3lsThUuoJAogioiAgSEVxGGri/VdIo4f2kK7Tpbfrp84VK39DYIj+vKYC5yfyUmQGADqa4kpTkgkeMgNeiyxWBjhf+1OzZV86FZHM+/0kpwOK1i+6VkR08X5CenYbrbkRlk1RvHfY7qDIxuXWptVh689gB4cYn9Dj+sJg3zVp4Nl6ZrXkQYUo2VQfLbhfg==", "n": 4}, {"s": "HWrWUxjflz5UQ+cRjMDo2Q==", "i": "qDIbflmEBhkvSYLc", "c": "QvA6TyI0aZh49gcPrdGkH35N3xLaHVju7j0AUvW4PHhtYFzkqqNeS4K4+kYP4Hrdlo68y9qEueRKdZ+EUfuKnOOM8N+Q5N+nhY2kUFdfPovTdIEowGcBQxJmI3yZS//DwOPc1MQEGsR/JkSIgUZnnS3rB9AnYc0rCsnuqNXbYtTm2bSWn+wV5ynW+l0R95Ywn+P4h2fqe60kDXSIyNoYgwCRf9NMnApOYOPqtvSQKfVad5ckeq6jCNHogrTZX2m5gbmSGBwi8vrkFQDa/Qba47DUoO0gMZuQUTE5uok8IjGpN9WBiZAbdlHNZ0ZGWGw9iI1IHD75/EqVFl0EnXczILxKUTQMdIpXajtsouLTpOgSFgWhUb+PYCKra0MrIANF81Y/mK3riwac51jm2WwF9/uvGKdCXJK5zMpcDuZFwSLRy7a/5MnjDYEBi85vdUcYX2jPw4j8NMyFFr956YWECp54/G1u6mA/G0n+SSopAQSHF6T1N02HjZyGZyCo2VRMplh08fkaF8RvTXCCkFtQoDUfLO23uhxtETg+yGw1P45VXvBUFmaCbqR2cj4L7IXbQLvhXDiyWkvAsywCBE4wRcnmkPmFtqR2PmmIHEvwXiwKy2w6LvZ6CPw+ROp/dRer1awhWBk0G+bB339r/UWft4RzHaEle5xeoDd6y8JhzxhMBR1jbPP6+XmYk4y+/lWTqI6RubGyHUWZXFFqLMglmFlmVNX303u5R6prypu85sZIJt+UeVdr3r8O4eKrxk6PSfjusscLkQAgTxQLPNLzrEtXU5nZ4fKHR/8J0UL7pqoUyDHvjBZWVCzdrqThSt7yAc9LoLAE7j4LtFz0tfl0RfQgq7FgYcaSztQVBL0JPCeVDPER+JU14BFdjgB2+8m7jSlhw9By2TWsq6X0peBI38zmFcQqUoJi73e0vqnXS9vUa+OtZOjiQp3zwlQtjJu0mJgPyH5zWyfc1MewI94elti1cpHZ/7BzD5A8hOnazQAfFS/J/zWTILLF3QT9mBqL5CBtAW9mCYNQG01+zh/eTstCk31zAy7h7XjtndcuR5X/vwGYSg11kFzq0lNdD3zkJN9UHNl5jA2X9NzBA00bD2CtE4y3iM0SbN4+TjegPwa2/BYh0mZDOEa4kFYEiyGF79XZKIecffd9K+cxzEklWE5ONZ9Wb5FFlAZgwH6Ydx0Qtn7//ZCZV35ZtTS95XptW/PsCwiqWX0ur9zByXMyQVl5dlxC1p0jdZpCSGYEjQ5QwAa7doWSmzqgUBVreLM1cnSvHbwuCT6OWwJ5ntJzKtpLwI6SfQOq/uf5DHfZOme+vX/bL8nN7TZQwDSQVkBU7zxFuOXbhC5TEOg4aBr7YkWflVaGSwvWycNMbuPSdYr8U1jtkKO3P1MhqnNHb9fZNBh+1Q==", "n": 5}, {"s": "678K+XKD/nM1srM7E++6nA==", "i": "NUM20IkicexEcLxb", "c": "2ns6Tw7AU3EFchJwW/+BeUz8GyzL//4UbLXWjNu9Mk9Is+D65k4+7P+16rjBwnCOX2gsEg6ApxZOI7/WWhVQmJDYtWpTSlzOxCogYYeT/xFPUt927rM4079xbrCC/fs5iU5vKgetShcIOhI+VAjnnxm5tGqjAh0uzTaPUmFDa5d00wVuqOdPdwVGrLUv2tgv5XniE5RTOADrR+ppCHcMrrXhKbLo5jKD/BNas07jMLMQD98TKmEpRbJE7aHqJj46AHyHjBHxwLs6cKCZX75MMZdVGgIOVs0s5dykX8IxYPjRZIDO/SDeJxHXpCHwz3Mg1dOZoR2ApwzDKszw/dzIpG1uDgQkblHL4stWXHDvy7izJTCRE1UDLEqGy4wqMgL3dNc80ppbZw==", "n": 6}];
+(function(){
+  const $=s=>document.querySelector(s);
+  const KEY="sixpm.v1";
+  const load=()=>{ try{ return JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){ return {}; } };
+  const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} };
+  let state=load(); state.codes=state.codes||{}; state.final=state.final||{};
+  const unlocked={};      // n -> decrypted content
+  let current=null;       // "home" | round n | "final"
+
+  function who(){ const n=state.num; const t=TEAMS[Math.floor((n-1)/5)]; return {team:t, person:((n-1)%5)+1}; }
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+  // ---------- crypto ----------
+  const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+  async function decrypt(blob,code){
+    const enc=new TextEncoder();
+    const base=await crypto.subtle.importKey("raw",enc.encode(code),"PBKDF2",false,["deriveKey"]);
+    const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(blob.s),iterations:150000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+    const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(blob.i)},key,b64(blob.c));
+    return JSON.parse(new TextDecoder().decode(pt));
+  }
+  async function tryCode(raw){
+    const code=raw.trim().toUpperCase().replace(/\s+/g,"");
+    if(!code) return null;
+    for(const b of BLOBS){
+      if(unlocked[b.n]) continue;
+      try{ const c=await decrypt(b,code); unlocked[b.n]=c; state.codes[b.n]=code; save(); return b.n; }catch(e){}
+    }
+    for(const b of BLOBS){ if(state.codes[b.n]===code) return b.n; }
+    return null;
+  }
+
+  // ---------- join ----------
+  $("#joinBtn").addEventListener("click",()=>{
+    const name=$("#inName").value.trim(), num=parseInt($("#inNum").value,10);
+    if(!name){ $("#joinErr").textContent="Please enter your name."; return; }
+    if(!(num>=1&&num<=25)){ $("#joinErr").textContent="Enter the number you called out, from 1 to 25."; return; }
+    state.name=name; state.num=num; save(); startPlay();
+  });
+  $("#resetBtn").addEventListener("click",()=>{ state={codes:state.codes,final:{}}; delete state.name; delete state.num; save(); $("#vPlay").hidden=true; $("#vJoin").hidden=false; $("#whoTop").textContent=""; document.documentElement.style.removeProperty("--team"); });
+
+  async function startPlay(){
+    const w=who();
+    document.documentElement.style.setProperty("--team",w.team.color);
+    $("#whoTop").textContent=state.name+" · "+w.team.name;
+    $("#vJoin").hidden=true; $("#vPlay").hidden=false;
+    for(const b of BLOBS){ const c=state.codes[b.n]; if(c&&!unlocked[b.n]){ try{ unlocked[b.n]=await decrypt(b,c); }catch(e){} } }
+    const opened=Object.keys(unlocked).map(Number).sort((a,b)=>a-b);
+    show(opened.length? opened[opened.length-1] : "home");
+  }
+
+  // ---------- views ----------
+  function tabs(){
+    const items=[["home","My role"]];
+    Object.keys(unlocked).map(Number).sort((a,b)=>a-b).forEach(n=>items.push([n, n===6?"6 PM":"Round "+n]));
+    $("#tabs").innerHTML=items.map(([k,l])=>`<button data-k="${k}" aria-current="${String(k)===String(current)}">${l}</button>`).join("");
+    $("#tabs").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.k==="home"?"home":Number(b.dataset.k))));
+  }
+  function myFact(){ const w=who(); return PEOPLE[w.team.id][w.person-1]; }
+  function nextLabel(){
+    const opened=Object.keys(unlocked).map(Number);
+    const max=opened.length?Math.max(...opened):0;
+    $("#codeLabel").textContent = max===0 ? "When the facilitator starts Round 1, enter the code on the big screen" : max>=6 ? "Enter a code if the facilitator asks you to" : "When the next round starts, enter the new code";
+  }
+  function show(k){
+    current=k; tabs(); nextLabel();
+    const w=who(), v=$("#view");
+    if(k==="home"){
+      v.innerHTML=`<div class="id"><div class="band"><small>YOUR FUNCTION</small><h2>${esc(w.team.name)}</h2><div class="tbl">Person ${w.person} · Table ${w.team.table}</div></div>
+        <div class="body">
+          <p><strong>Find your four teammates at Table ${w.team.table}.</strong></p>
+          <div><div class="label">Your objective</div><p>${esc(OBJECTIVE)}</p></div>
+          <div><div class="label">Your function</div><p>${esc(w.team.role)}</p></div>
+          <div class="kpi"><i>PROTECT</i>${esc(w.team.kpi)}</div>
+          <div><div class="label">What you know</div><div class="fact">${esc(myFact())}</div><p class="muted" style="font-size:14px;margin-top:6px">Only you have this. Your teammates each hold something different.</p></div>
+          <div><div class="label">Remember</div><p>You are responsible for your function's output. You are not responsible for everyone else's work.</p></div>
+          <div class="wait">Wait for the facilitator</div>
+        </div></div>`;
+      return;
+    }
+    const c=unlocked[k];
+    if(k===6){
+      const f=state.final[w.team.id]||{};
+      v.innerHTML=`<div class="panel final"><div class="round"><div class="top"><span class="label">THE CFO CALL</span><span class="clock">${esc(c.clock)}</span></div></div>
+        <h2>The CFO wants one answer</h2>
+        <p class="muted">Agree this as a team. Your spokesperson reads it out when the facilitator calls ${esc(w.team.name)}.</p>
+        <div><div class="label">The CFO asks ${esc(w.team.name)}</div><p class="q">${esc(c.questions[w.team.id])}</p></div>
+        <div class="field"><label class="label" for="fNum">Our number</label><input id="fNum" placeholder="₹ crore" value="${esc(f.num||"")}"></div>
+        <div><div class="label">Our confidence</div><div class="chips" id="fConf">${["Low","Medium","High"].map(x=>`<button aria-pressed="${f.conf===x}">${x}</button>`).join("")}</div></div>
+        <div class="field"><label class="label" for="fAct">What we are willing to own</label><textarea id="fAct" placeholder="We will...">${esc(f.act||"")}</textarea></div>
+      </div>`;
+      const put=()=>{ state.final[w.team.id]={num:$("#fNum").value,conf:(v.querySelector('#fConf [aria-pressed="true"]')||{}).textContent,act:$("#fAct").value}; save(); };
+      $("#fNum").addEventListener("input",put); $("#fAct").addEventListener("input",put);
+      v.querySelectorAll("#fConf button").forEach(b=>b.addEventListener("click",()=>{ v.querySelectorAll("#fConf button").forEach(x=>x.setAttribute("aria-pressed","false")); b.setAttribute("aria-pressed","true"); put(); }));
+      return;
+    }
+    const hit=c.hit===w.team.id;
+    v.innerHTML=`<div class="panel round">
+        <div class="top"><span class="label">ROUND ${c.n}</span><span class="clock">${esc(c.clock)}</span></div>
+        <h2>${esc(c.title)}</h2>
+        ${c.since?`<p class="since"><strong>Since the last round:</strong> ${esc(c.since)}</p>`:""}
+        <p class="headline">${esc(c.headline)}</p>
+      </div>
+      <div class="panel" style="border-color:var(--team)">
+        <div class="label" style="color:var(--team);filter:brightness(1.6)">${esc(w.team.name)}</div>
+        ${hit?`<span class="hit">This one has landed on your team</span>`:""}
+        <p class="brief">${esc(c.briefs[w.team.id])}</p>
+        <details><summary>What you know</summary><div class="fact">${esc(myFact())}</div></details>
+      </div>
+      <div class="panel"><div class="label">Discuss as a team</div><ol class="qs">${c.discuss.map(q=>`<li>${esc(q)}</li>`).join("")}</ol></div>
+      <div class="panel"><p class="cfo"><small>The CFO asks</small>“${esc(c.cfo)}”</p></div>
+      ${c.n>=2?`<div class="panel"><div class="label">When the facilitator asks you to rate a response</div><div class="rate"><button class="b" data-r="BLAME">BLAME</button><button class="e" data-r="EXPLAIN">EXPLAIN</button><button class="o" data-r="OWN">OWN</button></div></div>`:""}`;
+    v.querySelectorAll(".rate button").forEach(b=>b.addEventListener("click",()=>{ const col={BLAME:"var(--blame)",EXPLAIN:"var(--explain)",OWN:"var(--own)"}[b.dataset.r]; $("#overlay").style.background=col; $("#ovWord").textContent=b.dataset.r; $("#overlay").hidden=false; }));
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  $("#overlay").addEventListener("click",()=>{$("#overlay").hidden=true;});
+  $("#overlay").addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key==="Escape") $("#overlay").hidden=true; });
+
+  async function submitCode(){
+    $("#codeErr").textContent="Checking…"; $("#codeBtn").disabled=true;
+    const n=await tryCode($("#inCode").value);
+    $("#codeBtn").disabled=false;
+    if(n===null){ $("#codeErr").textContent="That code didn't work. Check the big screen and try again."; return; }
+    $("#codeErr").textContent=""; $("#inCode").value=""; show(n);
+  }
+  $("#codeBtn").addEventListener("click",submitCode);
+  $("#inCode").addEventListener("keydown",e=>{ if(e.key==="Enter") submitCode(); });
+
+  if(state.name&&state.num) startPlay();
+})();
+</script>
+</body>
+</html>
