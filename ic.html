@@ -108,6 +108,8 @@ button{font:inherit;cursor:pointer}
 .drop.hot{border-color:var(--accent);background:var(--surface-2)}
 .slot.ok .n{background:var(--a-soft);color:var(--ok);border-color:var(--ok)}
 .slot.bad .n{background:var(--c-soft);color:var(--bad);border-color:var(--bad)}
+.slot.ok .card{border-color:var(--ok);box-shadow:inset 6px 0 0 var(--ok)}
+.slot.bad .card{border-color:var(--bad);box-shadow:inset 6px 0 0 var(--bad)}
 .selecting .drop:empty{border-color:var(--accent)}
 
 .card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px 11px;box-shadow:var(--shadow);cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;display:grid;gap:8px;align-content:start;color:var(--ink);width:100%}
@@ -630,8 +632,10 @@ const MEDIA = {
     attempts++; triesByKey[S().key]=attempts; checked=true;
     if(allRight()){ const s=Math.floor((Date.now()-clockStart)/1000); markSolved("Correct! You put the story together in "+Math.floor(s/60)+"m "+(s%60)+"s."); return; }
     const left=MAXTRIES-attempts, r=$("#result"); r.className="result bad";
-    if(left>0){ r.textContent="Not quite. At least one piece is in the wrong place. Try again."; setBar("wrong"); render(); }
-    else { r.textContent="Not quite. Keep trying, or ask the facilitator for the code to see the answer."; setBar("wrong"); render(); }
+    hints=true; const right=slots.filter((p,i)=>slotOk(i)).length;
+    const marked=right+" of "+NN()+" pieces are in the right place. Green is right; move the red ones.";
+    if(left>0){ r.textContent="Not quite. "+marked; setBar("wrong"); render(); }
+    else { r.textContent="Not quite. "+marked+" Keep trying, or ask the facilitator for the code to see the answer."; setBar("wrong"); render(); }
   });
   $("#codeForm").addEventListener("submit",e=>{
     e.preventDefault();
