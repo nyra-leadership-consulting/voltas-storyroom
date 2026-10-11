@@ -261,7 +261,7 @@ button{font:inherit;cursor:pointer}
         <ol class="rules">
           <li id="bTime">This is an individual activity. About 5 minutes to build the story.</li>
           <li>Drag pieces onto the story line. On a phone or tablet, tap a piece and then tap a slot.</li>
-          <li>You have three tries. If the story still isn't right, ask the facilitator for the code to see the answer.</li>
+          <li>Keep trying until the story is right. After three tries, you can also ask the facilitator for the code to see the answer.</li>
           <li>Then find a partner and tell them the story.</li>
         </ol>
         <div class="row"><button class="btn primary" id="startBtn">Deal the pieces</button></div>
@@ -462,8 +462,8 @@ const MEDIA = {
   function setBar(state){
     $("#toSpeak").hidden = state!=="solved";
     $("#hintBtn").hidden = true;
-    $("#codeForm").hidden = state!=="out";
-    $("#checkBtn").hidden = state==="solved" || state==="out";
+    $("#codeForm").hidden = state==="solved" || attempts<MAXTRIES;
+    $("#checkBtn").hidden = state==="solved";
     $("#showAnswer").hidden = true; syncSteps();
   }
   const MAXTRIES=3, KEY="UkVWRUFM";
@@ -473,8 +473,8 @@ const MEDIA = {
     let order; do { order=shuffle(base); } while (order.filter((p,i)=>p===i+1).length>0);
     pile=order; ids={};
     const letters=shuffle("ABCDEFGHIJKL".slice(0,NN()).split("")); order.forEach((p,i)=>ids[p]=letters[i]);
-    slots=Array(NN()).fill(null); checked=false; solved=false; hints=false; attempts=keepTries?attempts:(triesByKey[S().key]||0); out=attempts>=MAXTRIES; selected=null; dealt=true; revealed=0;
-    clockStart=Date.now(); stopAudio(); setBar(out?"out":"open"); if(out) outMessage(); render();
+    slots=Array(NN()).fill(null); checked=false; solved=false; hints=false; attempts=keepTries?attempts:(triesByKey[S().key]||0); out=false; selected=null; dealt=true; revealed=0;
+    clockStart=Date.now(); stopAudio(); setBar("open"); render();
   }
 
   function renderPicker(){
@@ -626,8 +626,8 @@ const MEDIA = {
     attempts++; triesByKey[S().key]=attempts; checked=true;
     if(allRight()){ const s=Math.floor((Date.now()-clockStart)/1000); markSolved("Correct! You put the story together in "+Math.floor(s/60)+"m "+(s%60)+"s."); return; }
     const left=MAXTRIES-attempts, r=$("#result"); r.className="result bad";
-    if(left>0){ r.textContent="Not quite. At least one piece is in the wrong place. "+(left===1?"1 try left.":left+" tries left."); setBar("wrong"); render(); }
-    else { out=true; outMessage(); setBar("out"); render(); $("#codeIn").focus(); }
+    if(left>0){ r.textContent="Not quite. At least one piece is in the wrong place. Try again."; setBar("wrong"); render(); }
+    else { r.textContent="Not quite. Keep trying, or ask the facilitator for the code to see the answer."; setBar("wrong"); render(); }
   });
   $("#codeForm").addEventListener("submit",e=>{
     e.preventDefault();
