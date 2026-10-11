@@ -188,6 +188,11 @@ button{font:inherit;cursor:pointer}
 .answerbox p{font-size:17px;font-weight:600;line-height:1.5;margin:6px 0 0}
 .remember{margin:0;font-size:16px}
 .steps button:disabled{opacity:.45;cursor:not-allowed}
+.codeform{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.codeform input{font:inherit;font-size:15px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);text-transform:uppercase;letter-spacing:.06em;min-width:0;width:220px}
+.tries{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.checks label{display:flex;gap:10px;align-items:center;font-size:17px;padding:8px 0}
+.checks input{width:20px;height:20px}
 .band{border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;grid-template-columns:108px minmax(0,1fr);overflow:hidden}
 .band .key{display:grid;align-content:center;justify-items:center;gap:2px;padding:10px 6px;background:var(--surface-2);border-right:1px solid var(--line);text-align:center}
 .band .key b{font-family:var(--display);font-size:40px;font-weight:800;line-height:1}
@@ -230,7 +235,7 @@ button{font:inherit;cursor:pointer}
     <nav class="steps" aria-label="Activity stages">
       <button data-go="0" aria-current="step"><b>1</b>Brief</button>
       <button data-go="1"><b>2</b>Build the story</button>
-      <button data-go="2"><b>3</b>Say it out loud</button>
+      <button data-go="2"><b>3</b>Tell a partner</button>
       <button data-go="3"><b>4</b>The pattern</button>
     </nav>
   </header>
@@ -254,9 +259,10 @@ button{font:inherit;cursor:pointer}
         <div class="track"><span></span><strong id="whoName"></strong><small id="whoHint"></small></div></div>
         <div class="label">How it runs</div>
         <ol class="rules">
-          <li id="bTime">Teams of 4 to 5. About 5 minutes to build the story.</li>
+          <li id="bTime">This is an individual activity. About 5 minutes to build the story.</li>
           <li>Drag pieces onto the story line. On a phone or tablet, tap a piece and then tap a slot.</li>
-          <li id="ruleSpeak">Submit your order. Then one speaker has 60 seconds to say it out loud.</li>
+          <li>You have three tries. If the story still isn't right, ask the facilitator for the code to see the answer.</li>
+          <li>Then find a partner and tell them the story.</li>
         </ol>
         <div class="row"><button class="btn primary" id="startBtn">Deal the pieces</button></div>
       </div>
@@ -287,48 +293,29 @@ button{font:inherit;cursor:pointer}
       <div class="row">
         <button class="btn plain" id="hintBtn" hidden>Show which pieces are right</button>
         <button class="btn plain" id="showAnswer" hidden>Show the right order</button>
+        <form class="codeform" id="codeForm" autocomplete="off" hidden><input id="codeIn" placeholder="Code from the facilitator" aria-label="Code from the facilitator"><button class="btn primary">See the answer</button></form>
         <button class="btn primary" id="checkBtn" disabled>Submit my story</button>
-        <button class="btn primary" id="toSpeak" hidden>Now communicate it</button>
+        <button class="btn primary" id="toSpeak" hidden>Next: tell a partner</button>
       </div>
     </div>
   </section>
 
   <section class="stage" id="st2">
-    <div class="build-head">
-      <div>
-        <div class="eyebrow" id="speakScen"></div>
-        <h2>You've got the story. Now communicate it.</h2>
-        <p>Put the pieces away. One speaker per team has 60 seconds. The rest of the room plays the audience.</p>
-      </div>
-    </div>
-    <div class="speak">
-      <div class="stack">
-        <div class="audience" id="audience"></div>
-        <div class="timer">
-          <div class="ring" id="ring"><svg viewBox="0 0 120 120"><circle class="bgc" cx="60" cy="60" r="52"/><circle class="fg" id="ringFg" cx="60" cy="60" r="52"/></svg><div class="t" id="tLeft">60</div></div>
-          <div class="stack">
-            <div class="row"><button class="btn primary" id="tStart">Start 60 seconds</button><button class="btn plain" id="tReset">Reset</button></div>
-            <p class="note">Start when the speaker says their first word.</p>
-          </div>
+    <div class="simple">
+      <div class="eyebrow" id="speakScen"></div>
+      <h2>Find a partner and tell the story</h2>
+      <p class="lead">Put the pieces away. One of you tells the story in under a minute, without looking at the cards. The other listens. Then swap.</p>
+      <div class="panel"><div class="label">Tell it as if you're briefing</div><h3 id="partnerWho" style="margin:2px 0 0;font-size:22px"></h3></div>
+      <div class="panel">
+        <div class="label">The listener checks: could you answer these?</div>
+        <div class="checks" id="checks">
+          <label><input type="checkbox"> What happened?</label>
+          <label><input type="checkbox"> Why does it matter?</label>
+          <label><input type="checkbox"> What needs to happen next?</label>
         </div>
+        <div class="verdict" id="verdict">0 of 3 answered</div>
       </div>
-      <div class="stack">
-        <div class="panel">
-          <div class="label">Audience check</div>
-          <p class="note" style="margin-top:-6px">After listening, can the room answer these? If not, the message did not land.</p>
-          <div class="checks" id="checks">
-            <label><input type="checkbox" id="chk1"> What happened?</label>
-            <label><input type="checkbox" id="chk2"> Why does it matter?</label>
-            <label><input type="checkbox" id="chk3"> What needs to happen next?</label>
-          </div>
-          <div class="verdict" id="verdict">0 of 3 answered</div>
-        </div>
-        <div class="panel">
-          <div class="row" style="justify-content:space-between"><div class="label">What a strong answer sounds like</div><button class="btn plain" id="modelBtn">Show model answer</button></div>
-          <div class="model" id="model" hidden></div>
-        </div>
-        <div class="row"><button class="btn primary" id="toPattern">Look at what you built</button></div>
-      </div>
+      <div class="row"><button class="btn primary" id="toPattern">See the SCQA pattern</button></div>
     </div>
   </section>
 
@@ -426,7 +413,7 @@ const MEDIA = {
 
   const $ = s => document.querySelector(s);
   let si=0, track="ic", ids={}, pile=[], slots=[];
-  let checked=false, solved=false, hints=false, attempts=0, selected=null, dealt=false, clockStart=null, revealed=0;
+  let checked=false, solved=false, hints=false, attempts=0, out=false, triesByKey={}, selected=null, dealt=false, clockStart=null, revealed=0;
   const S = () => SCEN[si];
   const piece = pos => { const p=S().pieces[pos-1]; return {pos, sec:p[0], ...p[1]}; };
   // A story is right when every piece sits in its own part (Situation, Complication, Question, Answer),
@@ -477,32 +464,26 @@ const MEDIA = {
 
   function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
   function setBar(state){
-    $("#checkBtn").hidden = state==="solved";
     $("#toSpeak").hidden = state!=="solved";
-    $("#hintBtn").hidden = state!=="wrong";
+    $("#hintBtn").hidden = true;
+    $("#codeForm").hidden = state!=="out";
+    $("#checkBtn").hidden = state==="solved" || state==="out";
     $("#showAnswer").hidden = true; syncSteps();
   }
-  function deal(){
+  const MAXTRIES=3, KEY="UkVWRUFM";
+  function outMessage(){ const r=$("#result"); r.className="result bad"; r.textContent="That was your third try. Ask the facilitator for the code to see the answer."; }
+  function deal(keepTries){
     const base=RANGE();
     let order; do { order=shuffle(base); } while (order.filter((p,i)=>p===i+1).length>0);
     pile=order; ids={};
     const letters=shuffle("ABCDEFGHIJKL".slice(0,NN()).split("")); order.forEach((p,i)=>ids[p]=letters[i]);
-    slots=Array(NN()).fill(null); checked=false; solved=false; hints=false; attempts=0; selected=null; dealt=true; revealed=0;
-    clockStart=Date.now(); stopAudio(); setBar("open"); render();
+    slots=Array(NN()).fill(null); checked=false; solved=false; hints=false; attempts=keepTries?attempts:(triesByKey[S().key]||0); out=attempts>=MAXTRIES; selected=null; dealt=true; revealed=0;
+    clockStart=Date.now(); stopAudio(); setBar(out?"out":"open"); if(out) outMessage(); render();
   }
 
   function renderPicker(){
     $("#scenPick").innerHTML = SCEN.map((s,i)=>`<button class="scen" data-i="${i}" aria-pressed="${i===si}"><img src="${MEDIA.img[s.key]}" alt=""><span class="lvl">${s.lvl}</span><strong>${s.name}</strong><small>${s.skill}</small></button>`).join("");
     $("#scenPick").querySelectorAll(".scen").forEach(b=>b.addEventListener("click",()=>{ si=+b.dataset.i; dealt=false; solved=false; syncSteps(); stopAudio(); renderPicker(); renderBrief(); }));
-  }
-  // ICs skip the speaking step and go straight from the story to the pattern.
-  const NOSPEAK = track==="ic";
-  if(NOSPEAK){
-    document.querySelector('.steps [data-go="2"]').remove();
-    document.querySelector('.steps [data-go="3"] b').textContent="3";
-    $("#toSpeak").textContent="See the pattern";
-    $("#whoBox").remove();
-    $("#ruleSpeak").textContent="Submit your order when the team agrees.";
   }
   function renderBrief(){
     const s=S();
@@ -516,7 +497,7 @@ const MEDIA = {
     if(s.job) $("#bJob").innerHTML=s.job;
     else $("#bJob").innerHTML=`<strong>Your job:</strong> the full story is spread across ${words[n]} pieces: ${words[cnt("msg")]} messages, a photo and a voice note. They have been shuffled. Study the photo, play the voice note, and put all ${words[n]} in the order that makes the story easiest for someone else to understand.`;
     $("#bKit").innerHTML=`<span>${cnt("msg")} × ${s.flex?"Written update":"Message"}</span><span>1 × ${s.imgKind||(s.flex?"Document":"Photo")}</span><span>1 × Voice note</span>`;
-    $("#bTime").textContent=`Teams of 4 to 5. About ${n>6?7:5} minutes to build the story.`;
+    $("#bTime").textContent=`This is an individual activity. About ${n>6?7:5} minutes to build the story.`;
     $("#buildIntro").textContent=`Arrange the ${words[n]} pieces in the order that would make the story easiest for someone else to understand. Play the voice note and open the ${(s.imgKind||(s.flex?"document":"photo")).toLowerCase()}. Both belong in the story. Drag a piece back to the pile to remove it, or onto another piece to swap them.`;
   }
 
@@ -578,13 +559,13 @@ const MEDIA = {
     });
     document.body.classList.toggle("selecting",selected!==null);
     const full=slots.every(x=>x!==null);
-    $("#checkBtn").disabled=!full;
-    if(!checked){ const r=$("#result"); r.className="result"; r.textContent= full?"All "+NN()+" placed. Submit when the team agrees.":(NN()-pile.length)+" of "+NN()+" pieces placed."; }
+    $("#checkBtn").disabled=!full || out;
+    if(!checked && !out){ const r=$("#result"); r.className="result"; r.textContent= full?"All "+NN()+" placed. Submit when the team agrees.":(NN()-pile.length)+" of "+NN()+" pieces placed."; }
     syncAudio();
   }
   function where(pos){ const i=slots.indexOf(pos); return i>=0?{type:"slot",idx:i}:{type:"pile"}; }
   function place(pos,target){
-    if(solved){ selected=null; render(); return; }
+    if(solved || out){ selected=null; render(); return; }
     const from=where(pos);
     if(target.type==="pile"){ if(from.type==="slot"){ slots[from.idx]=null; pile.push(pos);} }
     else {
@@ -596,7 +577,7 @@ const MEDIA = {
     selected=null; checked=false; hints=false; setBar("open"); render();
   }
   function toggleSelect(pos){
-    if(solved) return;
+    if(solved || out) return;
     if(selected!==null && selected!==pos && where(pos).type==="slot"){ place(selected,where(pos)); return; }
     selected = selected===pos?null:pos; render();
   }
@@ -604,7 +585,7 @@ const MEDIA = {
 
   let drag=null;
   function onDown(e){
-    if(solved) return;
+    if(solved || out) return;
     if(e.target.closest("button")) return;
     if(e.button!==undefined && e.button!==0) return;
     const el=e.currentTarget;
@@ -645,36 +626,31 @@ const MEDIA = {
 
   function markSolved(msg){ solved=true; checked=true; hints=false; const r=$("#result"); r.className="result ok"; r.textContent=msg; setBar("solved"); render(); }
   $("#checkBtn").addEventListener("click",()=>{
-    attempts++; checked=true;
-    if(allRight()){ const s=Math.floor((Date.now()-clockStart)/1000); markSolved("Correct! You put the story together in "+Math.floor(s/60)+"m "+(s%60)+"s."); }
-    else { const r=$("#result"); r.className="result bad"; r.textContent="Not quite. At least one piece is in the wrong place. Try again."; setBar("wrong"); render(); }
+    if(solved || out) return;
+    attempts++; triesByKey[S().key]=attempts; checked=true;
+    if(allRight()){ const s=Math.floor((Date.now()-clockStart)/1000); markSolved("Correct! You put the story together in "+Math.floor(s/60)+"m "+(s%60)+"s."); return; }
+    const left=MAXTRIES-attempts, r=$("#result"); r.className="result bad";
+    if(left>0){ r.textContent="Not quite. At least one piece is in the wrong place. "+(left===1?"1 try left.":left+" tries left."); setBar("wrong"); render(); }
+    else { out=true; outMessage(); setBar("out"); render(); $("#codeIn").focus(); }
+  });
+  $("#codeForm").addEventListener("submit",e=>{
+    e.preventDefault();
+    const v=$("#codeIn").value.trim().toUpperCase();
+    if(btoa(v)===KEY){ out=false; slots=RANGE(); pile=[]; $("#codeIn").value=""; markSolved("Here is the right order. Read it through, then move on."); }
+    else { const r=$("#result"); r.className="result bad"; r.textContent="That code didn't work. Check it with the facilitator."; }
   });
   $("#hintBtn").addEventListener("click",()=>{ hints=true; render(); const right=slots.filter((p,i)=>slotOk(i)).length; $("#result").textContent="Pieces in the right place: "+right+" of "+NN()+". Green numbers are correct. Move the red ones."; });
   $("#showAnswer").addEventListener("click",()=>{ slots=RANGE(); pile=[]; markSolved("Here is the order that tells the story most clearly."); });
-  $("#reshuffle").addEventListener("click",deal);
-  $("#toSpeak").addEventListener("click",()=>go(NOSPEAK?3:2));
+  $("#reshuffle").addEventListener("click",()=>{ if(!solved && !out) deal(true); });
+  $("#toSpeak").addEventListener("click",()=>go(2));
 
   // ---------- speak ----------
   function renderTrack(){
     const s=S(), t=s[track];
-    $("#audience").innerHTML=`<div class="label">You are speaking to</div><h2>${t.who}</h2><div>They need to know:</div><ul>${t.needs.map(n=>`<li>${n}</li>`).join("")}</ul><div class="rule">You can't show them any of the pieces. Just tell them, in 60 seconds.</div>`;
-    $("#model").innerHTML=t.model.map(p=>`<p>${p}</p>`).join("");
-    
+    $("#partnerWho").textContent=t.who;
     $("#debrief").innerHTML=`<div class="label">What to take away</div>`+s.debrief.lines.map(l=>`<p style="margin:0">${l}</p>`).join("");
   }
-  $("#modelBtn").addEventListener("click",()=>{ const m=$("#model"); m.hidden=!m.hidden; $("#modelBtn").textContent=m.hidden?"Show model answer":"Hide model answer"; });
   $("#toPattern").addEventListener("click",()=>go(3));
-  const C=2*Math.PI*52, fg=$("#ringFg"); fg.style.strokeDasharray=C; fg.style.strokeDashoffset=0;
-  let left=60, tick=null;
-  function drawT(){ $("#tLeft").textContent=left; fg.style.strokeDashoffset=C*(1-left/60); $("#ring").classList.toggle("low",left<=10); }
-  $("#tStart").addEventListener("click",()=>{
-    if(tick){ clearInterval(tick); tick=null; $("#tStart").textContent="Resume"; return; }
-    if(left===0) left=60;
-    $("#tStart").textContent="Pause";
-    tick=setInterval(()=>{ left--; drawT(); if(left<=0){clearInterval(tick);tick=null;$("#tStart").textContent="Time. Start again";} },1000);
-  });
-  $("#tReset").addEventListener("click",()=>{ clearInterval(tick); tick=null; left=60; drawT(); $("#tStart").textContent="Start 60 seconds"; });
-  drawT();
   const chks=[...document.querySelectorAll("#checks input")];
   chks.forEach(c=>c.addEventListener("change",()=>{ const n=chks.filter(x=>x.checked).length; $("#verdict").textContent=n===3?"3 of 3. The message landed.":n+" of 3 answered"; $("#verdict").style.color=n===3?"var(--ok)":""; }));
 
