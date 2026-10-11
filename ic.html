@@ -234,13 +234,13 @@ button{font:inherit;cursor:pointer}
         </div>
       </div>
       <div class="panel">
-        <div class="label">Who you will brief</div>
-        <div class="track"><span></span><strong id="whoName"></strong><small id="whoHint"></small></div>
+        <div id="whoBox"><div class="label">Who you will brief</div>
+        <div class="track"><span></span><strong id="whoName"></strong><small id="whoHint"></small></div></div>
         <div class="label">How it runs</div>
         <ol class="rules">
           <li id="bTime">Teams of 4 to 5. About 5 minutes to build the story.</li>
           <li>Drag pieces onto the story line. On a phone or tablet, tap a piece and then tap a slot.</li>
-          <li>Submit your order. Then one speaker has 60 seconds to say it out loud.</li>
+          <li id="ruleSpeak">Submit your order. Then one speaker has 60 seconds to say it out loud.</li>
         </ol>
         <div class="row"><button class="btn primary" id="startBtn">Deal the pieces</button></div>
       </div>
@@ -507,12 +507,21 @@ const MEDIA = {
     $("#scenPick").innerHTML = SCEN.map((s,i)=>`<button class="scen" data-i="${i}" aria-pressed="${i===si}"><img src="${MEDIA.img[s.key]}" alt=""><span class="lvl">${s.lvl}</span><strong>${s.name}</strong><small>${s.skill}</small></button>`).join("");
     $("#scenPick").querySelectorAll(".scen").forEach(b=>b.addEventListener("click",()=>{ si=+b.dataset.i; dealt=false; stopAudio(); renderPicker(); renderBrief(); }));
   }
+  // ICs skip the speaking step and go straight from the story to the pattern.
+  const NOSPEAK = track==="ic";
+  if(NOSPEAK){
+    document.querySelector('.steps [data-go="2"]').remove();
+    document.querySelector('.steps [data-go="3"] b').textContent="3";
+    $("#toSpeak").textContent="See the pattern";
+    $("#whoBox").remove();
+    $("#ruleSpeak").textContent="Submit your order when the team agrees.";
+  }
   function renderBrief(){
     const s=S();
     $("#bStamp").textContent=s.stamp; $("#bQuote").textContent=s.quote; $("#bContext").textContent=s.context;
     const low = w => w.charAt(0).toLowerCase()+w.slice(1);
-    $("#whoName").textContent=s[track].who;
-    $("#whoHint").textContent= track==="ic" ? "Explain what is happening and what they need to do next." : "Give them the issue, the impact, your recommendation and your ask.";
+    if($("#whoName")) $("#whoName").textContent=s[track].who;
+    if($("#whoHint")) $("#whoHint").textContent= track==="ic" ? "Explain what is happening and what they need to do next." : "Give them the issue, the impact, your recommendation and your ask.";
     ["#buildScen","#speakScen","#patScen"].forEach(q=>$(q).textContent=s.lvl+" · "+s.name);
     const n=NN(), cnt=t=>s.pieces.filter(p=>p[1].type===t).length, words=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve"];
     const img=s.pieces.find(p=>p[1].type==="photo")[1];
@@ -526,7 +535,7 @@ const MEDIA = {
   const stepBtns=[...document.querySelectorAll(".steps button")];
   function go(n){
     document.querySelectorAll(".stage").forEach((s,i)=>s.classList.toggle("on",i===n));
-    stepBtns.forEach((b,i)=>{ if(i===n) b.setAttribute("aria-current","step"); else b.removeAttribute("aria-current"); });
+    stepBtns.forEach((b,i)=>{ if(+b.dataset.go===n) b.setAttribute("aria-current","step"); else b.removeAttribute("aria-current"); });
     if(n!==1) { player.pause(); }
     if(n===1 && !dealt) deal();
     if(n===2) renderTrack();
@@ -653,7 +662,7 @@ const MEDIA = {
   $("#hintBtn").addEventListener("click",()=>{ hints=true; render(); const right=slots.filter((p,i)=>slotOk(i)).length; $("#result").textContent="Pieces in the right place: "+right+" of "+NN()+". Green numbers are correct. Move the red ones."; });
   $("#showAnswer").addEventListener("click",()=>{ slots=RANGE(); pile=[]; markSolved("Here is the order that tells the story most clearly."); });
   $("#reshuffle").addEventListener("click",deal);
-  $("#toSpeak").addEventListener("click",()=>go(2));
+  $("#toSpeak").addEventListener("click",()=>go(NOSPEAK?3:2));
 
   // ---------- speak ----------
   function renderTrack(){
