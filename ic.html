@@ -238,7 +238,7 @@ button{font:inherit;cursor:pointer}
         <ol class="rules">
           <li>Teams of 4 to 5. About 5 minutes to build the story.</li>
           <li>Drag pieces onto the story line. On a phone or tablet, tap a piece and then tap a slot.</li>
-          <li>Submit your order. Then 60 seconds to say it out loud.</li>
+          <li>Submit your order. Then one speaker has 60 seconds to say it out loud.</li>
         </ol>
         <div class="row"><button class="btn primary" id="startBtn">Deal the pieces</button></div>
       </div>
@@ -250,7 +250,7 @@ button{font:inherit;cursor:pointer}
       <div>
         <div class="eyebrow" id="buildScen"></div>
         <h2>Put the story together</h2>
-        <p>Arrange the six pieces in the order that would make the story easiest for someone else to understand. Play the voice note and open the photo; both belong somewhere. Drag a piece back to the pile to remove it, or onto another piece to swap them.</p>
+        <p>Arrange the six pieces in the order that would make the story easiest for someone else to understand. Play the voice note and open the photo. Both belong in the story. Drag a piece back to the pile to remove it, or onto another piece to swap them.</p>
       </div>
       <div class="row"><span class="clock" id="buildClock">00:00</span><button class="btn plain" id="reshuffle">Reshuffle</button></div>
     </div>
@@ -280,7 +280,7 @@ button{font:inherit;cursor:pointer}
       <div>
         <div class="eyebrow" id="speakScen"></div>
         <h2>You've got the story. Now communicate it.</h2>
-        <p>Pieces down. One speaker per team, 60 seconds. The rest of the room plays the audience.</p>
+        <p>Put the pieces away. One speaker per team has 60 seconds. The rest of the room plays the audience.</p>
       </div>
     </div>
     <div class="speak">
@@ -381,11 +381,11 @@ const MEDIA = {
       context:"A competitor has launched a summer promotion. Sales wants to respond before the weekend, and Finance has to approve any incentive.",
       pieces:[
         ["S",M("A competitor has launched a summer promotion across several markets, and Voltas Sales is getting calls from dealers asking whether the company will match the offer. Sales believes the safest response is to give all affected dealers an additional incentive before the weekend.")],
-        ["C",M("Before approving the proposal, Finance asks Sales for something more specific: which dealers are actually losing business because of the competitor's offer? The team goes back to the regional sales representatives to understand what dealers are hearing from customers. The first update comes back from a dealer's showroom.")],
+        ["C",M("Before approving the proposal, Finance asks Sales for something more specific: which dealers are actually losing business because of the competitor's offer? Sales goes back to its regional representatives to find out what dealers are hearing from customers. The first update comes from a dealer's showroom.")],
         ["A",{type:"photo", label:"Showroom photo", alt:"In a Voltas showroom, a dealer points at a rival's summer offer poster that promotes a special price on one single AC model, while a Voltas sales representative listens"}],
         ["A",{type:"audio", who:"Dealer", text:"To be honest, customers are mainly comparing your offer with the competitor on one particular model. For the other models, the bigger issue for us is whether you can actually deliver on time. If I know I can get the stock when I need it, that's more important than another offer."}],
-        ["A",M("The dealer feedback changes the picture. The competitor's promotion is creating pressure around one model, but dealers are raising a different concern for the rest of the range: whether Voltas can deliver the required stock on time. A blanket incentive would therefore spend money on dealers and products where price is not necessarily the issue.")],
-        ["A",M("Finance recommends a selective response. The team should support dealers facing direct competitive pressure on the affected model, while protecting availability and delivery commitments for the rest of the portfolio. Sales will review dealer feedback and fulfilled orders on Monday before deciding whether the response needs to expand.")]
+        ["A",M("The dealer feedback changes the picture. The competitor's promotion is creating pressure around one model, but dealers are raising a different concern for the rest of the range: whether Voltas can deliver the required stock on time. A blanket incentive would therefore spend money on dealers and products where price may not be the problem.")],
+        ["A",M("Finance recommends a selective response. Voltas should support the dealers facing direct competition on that one model, and protect stock availability and delivery commitments for the rest of the range. Sales will review dealer feedback and fulfilled orders on Monday before deciding whether the response needs to go further.")]
       ],
       implicitQ:"Should Voltas match the competitor's offer for every dealer?",
       debrief:{title:"Debrief", lines:["Finance's question in piece 2 made the next two pieces necessary. The photo showed where the pressure was: one model on one poster. The dealer's voice note explained what matters for everything else.","Try moving the photo after the voice note. It stops adding anything, because the dealer has already said it. Each piece earns its place by answering the question the piece before it raised."]},
@@ -399,21 +399,21 @@ const MEDIA = {
       key:"call", name:"The 6:15 PM Call", skill:"Checking the facts under pressure",
       stamp:"Friday 6:15 PM · Sales calls Finance",
       quote:'"I need a yes tonight, or we lose the order."',
-      context:"A long-standing dealer has threatened to move an order to a competitor. The truck is waiting, and Sales wants a release now.",
+      context:"A long-standing dealer has threatened to move an order to a competitor. The truck is waiting, and Sales wants Finance to release the order now.",
       pieces:[
         ["S",M("It is 6:15 PM on a Friday when Rohan, a Sales Manager at Voltas, calls Finance. A long-standing dealer has placed an important order and says the truck must leave tonight or the order could move to a competitor. Sales wants Finance to release it immediately.")],
         ["C",M("A quick look at the dealer's account summary shows an outstanding balance from a previous purchase. On the surface, that appears to make the decision straightforward: the new order should remain on hold until the earlier amount is cleared.")],
         ["Q",{type:"audio", who:"Finance Executive", text:"I understand why Sales wants to move this quickly, but I don't want us to make the decision only because the truck is sitting there. Can you check what the dealer's payment history actually looks like and whether this outstanding amount is genuinely overdue? If the payment is already on the way, that's a very different situation."}],
         ["A",{type:"photo", label:"Screen capture", alt:"A finance executive reviews the dealer's account history on a laptop: five invoices marked paid on time, and one invoice marked disputed with the remark 'Damaged shipment, under resolution'"}],
-        ["A",M("The account history gives Finance a different picture. The dealer has consistently paid on time, and the outstanding amount is linked to an invoice that was disputed because part of the previous shipment arrived damaged. Sales confirms that the dealer has already agreed to settle the undisputed amount once the replacement issue is resolved.")],
-        ["A",M("Finance therefore agrees to release the order. The decision rests on the dealer's strong payment history and the fact that the outstanding amount is already under resolution. The importance of the customer and the waiting truck played no part in it. Finance asks Sales to document the arrangement before confirming the release to Operations.")]
+        ["A",M("The account history gives Finance a different picture. The dealer has consistently paid on time, and the outstanding amount is linked to an invoice that was disputed because part of the previous shipment arrived damaged. Sales confirms that the dealer has already agreed to pay the balance as soon as the damaged units are replaced.")],
+        ["A",M("Finance therefore agrees to release the order. The decision rests on the dealer's strong payment history and on the fact that the outstanding amount is a dispute that is already being resolved. The size of the customer and the waiting truck play no part in it. Finance asks Sales to put the payment arrangement in writing, and then confirms the release to Operations.")]
       ],
       implicitQ:null,
-      debrief:{title:"Debrief questions", lines:["What would have happened if Finance had only listened to Sales? They would have released it because the customer was important.","What if Finance had only looked at the account summary? They would have blocked it.","What changed the decision? The voice note asked the right question, and the account history answered it: the amount was disputed, never simply overdue."]},
+      debrief:{title:"Debrief questions", lines:["What would have happened if Finance had only listened to Sales? They would have released it because the customer was important.","What if Finance had only looked at the account summary? They would have blocked it.","What changed the decision? The voice note asked the right question, and the account history answered it: the amount was disputed, not overdue."]},
       ic:{who:"Rohan, the Sales Manager", needs:["Can the order go tonight?","Why?","What does Rohan need to do?"],
-        model:["Yes, the order can go tonight.","We checked the outstanding balance. It relates to an invoice disputed over damaged goods from the last shipment, the dealer has always paid on time, and they have agreed to settle the undisputed amount.","Please put the arrangement in writing for us. We are confirming the release to Operations now."],
-        ans:"The order can go tonight. Please document the arrangement with the dealer."},
-      why:"The balance is a disputed amount, the dealer has always paid on time, and the dispute is already being settled.",
+        model:["Yes, the order can go tonight.","We checked the outstanding balance. It relates to an invoice the dealer disputed because part of the last shipment arrived damaged. The dealer has always paid on time, and has agreed to pay the balance once the damaged units are replaced.","Please send us that payment arrangement in writing, and we will confirm the release to Operations straight away."],
+        ans:"The order can go tonight, as soon as you send us the payment arrangement in writing."},
+      why:"The balance is a disputed amount, the dealer has always paid on time, and the dealer will pay once the damaged units are replaced.",
       ev:"The account history: every earlier invoice paid on time, and one invoice disputed over a damaged shipment."
     }
   ];
@@ -613,8 +613,8 @@ const MEDIA = {
   function markSolved(msg){ solved=true; checked=true; hints=false; const r=$("#result"); r.className="result ok"; r.textContent=msg; setBar("solved"); render(); }
   $("#checkBtn").addEventListener("click",()=>{
     attempts++; checked=true;
-    if(slots.every((p,i)=>p===i+1)){ const s=Math.floor((Date.now()-clockStart)/1000); markSolved("Correct! You've got the story, in "+Math.floor(s/60)+"m "+(s%60)+"s. Move forward."); }
-    else { const r=$("#result"); r.className="result bad"; r.textContent="Not quite. Something in your structure is out of place. Try again."; setBar("wrong"); render(); }
+    if(slots.every((p,i)=>p===i+1)){ const s=Math.floor((Date.now()-clockStart)/1000); markSolved("Correct! You put the story together in "+Math.floor(s/60)+"m "+(s%60)+"s."); }
+    else { const r=$("#result"); r.className="result bad"; r.textContent="Not quite. At least one piece is in the wrong place. Try again."; setBar("wrong"); render(); }
   });
   $("#hintBtn").addEventListener("click",()=>{ hints=true; render(); const right=slots.filter((p,i)=>p===i+1).length; $("#result").textContent="Pieces in the right place: "+right+" of 6. Green numbers are correct. Move the red ones."; });
   $("#showAnswer").addEventListener("click",()=>{ slots=[1,2,3,4,5,6]; pile=[]; markSolved("Here is the order that tells the story most clearly."); });
@@ -624,7 +624,7 @@ const MEDIA = {
   // ---------- speak ----------
   function renderTrack(){
     const s=S(), t=s[track];
-    $("#audience").innerHTML=`<div class="label">You are speaking to</div><h2>${t.who}</h2><div>They need to know:</div><ul>${t.needs.map(n=>`<li>${n}</li>`).join("")}</ul><div class="rule">Pieces face down. You cannot show them anything. 60 seconds.</div>`;
+    $("#audience").innerHTML=`<div class="label">You are speaking to</div><h2>${t.who}</h2><div>They need to know:</div><ul>${t.needs.map(n=>`<li>${n}</li>`).join("")}</ul><div class="rule">You can't show them any of the pieces. Just tell them, in 60 seconds.</div>`;
     $("#model").innerHTML=t.model.map(p=>`<p>${p}</p>`).join("");
     $("#mAns").textContent=t.ans; $("#mWhy").textContent=s.why; $("#mEv").textContent=s.ev;
     $("#debrief").innerHTML=`<div class="label">${s.debrief.title}</div>`+s.debrief.lines.map(l=>`<p style="margin:0">${l}</p>`).join("");
@@ -660,7 +660,7 @@ const MEDIA = {
       b.className="band "+k+(bi<revealed?" shown":" hidden-key");
       let inner;
       if(cs.length) inner=`<ol start="${cs[0].pos}">${cs.map(c=>`<li>${describe(c)}</li>`).join("")}</ol>`;
-      else inner=`<div class="implicit"><small>Not on any piece. The question you had to find</small><strong>${S().implicitQ}</strong></div>`;
+      else inner=`<div class="implicit"><small>This question isn't written on any piece. You had to work it out.</small><strong>${S().implicitQ}</strong></div>`;
       b.innerHTML=`<div class="key"><b>${k}</b><span>${SECTIONS[k].name}</span><em>${SECTIONS[k].q}</em></div>${inner}`;
       host.appendChild(b);
     });

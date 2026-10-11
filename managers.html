@@ -238,7 +238,7 @@ button{font:inherit;cursor:pointer}
         <ol class="rules">
           <li>Teams of 4 to 5. About 5 minutes to build the story.</li>
           <li>Drag pieces onto the story line. On a phone or tablet, tap a piece and then tap a slot.</li>
-          <li>Submit your order. Then 60 seconds to say it out loud.</li>
+          <li>Submit your order. Then one speaker has 60 seconds to say it out loud.</li>
         </ol>
         <div class="row"><button class="btn primary" id="startBtn">Deal the pieces</button></div>
       </div>
@@ -250,7 +250,7 @@ button{font:inherit;cursor:pointer}
       <div>
         <div class="eyebrow" id="buildScen"></div>
         <h2>Put the story together</h2>
-        <p>Arrange the six pieces in the order that would make the story easiest for someone else to understand. Play the voice note and open the photo; both belong somewhere. Drag a piece back to the pile to remove it, or onto another piece to swap them.</p>
+        <p>Arrange the six pieces in the order that would make the story easiest for someone else to understand. Play the voice note and open the photo. Both belong in the story. Drag a piece back to the pile to remove it, or onto another piece to swap them.</p>
       </div>
       <div class="row"><span class="clock" id="buildClock">00:00</span><button class="btn plain" id="reshuffle">Reshuffle</button></div>
     </div>
@@ -280,7 +280,7 @@ button{font:inherit;cursor:pointer}
       <div>
         <div class="eyebrow" id="speakScen"></div>
         <h2>You've got the story. Now communicate it.</h2>
-        <p>Pieces down. One speaker per team, 60 seconds. The rest of the room plays the audience.</p>
+        <p>Put the pieces away. One speaker per team has 60 seconds. The rest of the room plays the audience.</p>
       </div>
     </div>
     <div class="speak">
@@ -380,7 +380,7 @@ const MEDIA = {
       quote:'"This is a big win. Can we approve it this week?"',
       context:"A hotel chain wants 200 air-conditioning units for a new property. On paper, the deal looks excellent.",
       pieces:[
-        ["S",M("The Sales team brings Finance a large commercial air-conditioning opportunity with a hotel chain. The customer wants 200 units for a new property and says it can sign the order this week. The headline numbers look attractive, and Sales wants to move quickly before the opportunity goes elsewhere.")],
+        ["S",M("The Sales team brings Finance a large commercial air-conditioning opportunity with a hotel chain. The customer wants 200 units for a new property and says it can sign the order this week. The headline numbers look attractive, and Sales wants to move quickly before the customer goes elsewhere.")],
         ["S",{type:"photo", label:"Site photo", alt:"A hotel still under construction with a large banner reading 'Grand Opening, 30 days to go', while a Voltas installation team waits beside a truck of AC units"}],
         ["C",M("Finance reviews the proposal and notices that the customer is asking for extended payment terms. The margin on the order still looks healthy, but Finance is concerned that the combination of delayed payment and a compressed installation schedule could change the economics of the deal.")],
         ["C",{type:"audio", who:"Customer Procurement Manager", text:"We can sign this week, but we need the 90-day payment terms we discussed. And the hotel has already announced its opening date, so we really can't afford any delay on installation. If Voltas can give us confidence on those two things, we're ready to move."}],
@@ -399,20 +399,20 @@ const MEDIA = {
       key:"rain", name:"The Rain Delay", skill:"Prioritising by business impact",
       stamp:"Monday 6:40 PM · The delivery team calls in from the road",
       quote:'"The route is flooded. We can’t get through."',
-      context:"Voltas has promised to deliver and install cold rooms across the city before a major food retailer's openings next week.",
+      context:"Voltas has promised to deliver and install cold rooms for a major food retailer's new stores across the city.",
       pieces:[
-        ["S",M("A major food retailer is scheduled to open several new cold rooms across the city next week. Voltas has committed to delivering and installing the refrigeration equipment across all the locations, and the project team has already agreed the delivery schedule with the customer.")],
+        ["S",M("A major food retailer is opening several new stores across the city, each with its own cold room. Voltas has committed to delivering and installing the refrigeration equipment at every location, and the project team has already agreed the delivery schedule with the customer. The retailer plans to start stocking the new stores over the coming days.")],
         ["C",{type:"photo", label:"Site photo", alt:"Two delivery workers beside a loaded Voltas truck on a waterlogged road outside a cold-storage facility in heavy monsoon rain, one on the phone and one checking the route"}],
-        ["C",M("The project team reports that the original delivery schedule can no longer be maintained. The immediate concern is whether the delay will affect the customer's ability to start receiving fresh goods at the new locations.")],
+        ["C",M("The project team reports that the original delivery schedule can no longer be met. The immediate concern is whether the delay will stop the customer from receiving fresh goods at the new stores.")],
         ["Q",{type:"audio", who:"Customer Project Manager", text:"I need to understand what this means for us. Two of these locations are receiving fresh stock tomorrow, so a delay there is a real problem. The other sites don't open until next week. If you can't make all the original dates, just tell me which ones you can protect and when I can expect the others."}],
         ["A",M("The project team compares the affected locations and finds that they do not have the same level of urgency. Two sites need the cold rooms operational before fresh stock arrives tomorrow, while the remaining locations can wait until the following week if they receive reliable revised dates.")],
-        ["A",M("Finance recommends a staged response. The two sites receiving fresh goods should be prioritised, with temporary protection arranged if necessary, while the remaining sites receive revised delivery dates and clear update times. The plan follows the business impact of the delay, so the most urgent sites come first.")]
+        ["A",M("Finance recommends a staged response. The two sites receiving fresh goods tomorrow come first, with temporary cooling arranged for them if needed. The remaining sites get firm revised delivery dates and a set time for progress updates. The plan follows the business impact of the delay, so the most urgent sites come first.")]
       ],
       implicitQ:null,
-      debrief:{title:"Debrief line", lines:["“A delay only becomes a crisis when it hurts the business. So the first question is always: what is the impact of this delay?”","The photo is the complication: it shows the plan breaking. The customer's voice note then asks the real question, which sites matter most."]},
+      debrief:{title:"Debrief line", lines:["“A delay only becomes a crisis when it hurts the business. So the first question is always: what is the impact of this delay?”","The photo is the complication: it shows the plan breaking. The customer's voice note then asks the real question: which sites matter most?"]},
       mgr:{who:"The Head of Finance", needs:["What is the issue?","What is the business impact?","What do you recommend?","What decision or support do you need?"],
-        model:["Heavy rain has blocked part of the route, and we cannot deliver to every cold-room site on schedule.","Two sites receive fresh stock tomorrow, so a delay there would cost the customer real money. The rest open next week and can take a short delay if they get firm dates. I recommend a staged rollout that protects those two sites first.","I need your approval for any temporary protection costs at those two sites."],
-        ans:"Run a staged rollout that protects the two fresh-stock sites first, and approve temporary protection costs if needed."},
+        model:["Heavy rain has blocked part of the route, and we cannot deliver to every cold-room site on schedule.","Two sites receive fresh stock tomorrow, so a delay there would cost the customer real money. The rest open next week and can take a short delay if they get firm dates. I recommend a staged rollout that protects those two sites first.","I need your approval for any temporary cooling costs at those two sites."],
+        ans:"Run a staged rollout that protects the two fresh-stock sites first, and approve temporary cooling costs if needed."},
       why:"Only two sites face an immediate business impact. The rest can wait if they get dependable dates.",
       ev:"The flooded route, the customer's call about tomorrow's fresh stock, and the team's site-by-site check."
     }
@@ -613,8 +613,8 @@ const MEDIA = {
   function markSolved(msg){ solved=true; checked=true; hints=false; const r=$("#result"); r.className="result ok"; r.textContent=msg; setBar("solved"); render(); }
   $("#checkBtn").addEventListener("click",()=>{
     attempts++; checked=true;
-    if(slots.every((p,i)=>p===i+1)){ const s=Math.floor((Date.now()-clockStart)/1000); markSolved("Correct! You've got the story, in "+Math.floor(s/60)+"m "+(s%60)+"s. Move forward."); }
-    else { const r=$("#result"); r.className="result bad"; r.textContent="Not quite. Something in your structure is out of place. Try again."; setBar("wrong"); render(); }
+    if(slots.every((p,i)=>p===i+1)){ const s=Math.floor((Date.now()-clockStart)/1000); markSolved("Correct! You put the story together in "+Math.floor(s/60)+"m "+(s%60)+"s."); }
+    else { const r=$("#result"); r.className="result bad"; r.textContent="Not quite. At least one piece is in the wrong place. Try again."; setBar("wrong"); render(); }
   });
   $("#hintBtn").addEventListener("click",()=>{ hints=true; render(); const right=slots.filter((p,i)=>p===i+1).length; $("#result").textContent="Pieces in the right place: "+right+" of 6. Green numbers are correct. Move the red ones."; });
   $("#showAnswer").addEventListener("click",()=>{ slots=[1,2,3,4,5,6]; pile=[]; markSolved("Here is the order that tells the story most clearly."); });
@@ -624,7 +624,7 @@ const MEDIA = {
   // ---------- speak ----------
   function renderTrack(){
     const s=S(), t=s[track];
-    $("#audience").innerHTML=`<div class="label">You are speaking to</div><h2>${t.who}</h2><div>They need to know:</div><ul>${t.needs.map(n=>`<li>${n}</li>`).join("")}</ul><div class="rule">Pieces face down. You cannot show them anything. 60 seconds.</div>`;
+    $("#audience").innerHTML=`<div class="label">You are speaking to</div><h2>${t.who}</h2><div>They need to know:</div><ul>${t.needs.map(n=>`<li>${n}</li>`).join("")}</ul><div class="rule">You can't show them any of the pieces. Just tell them, in 60 seconds.</div>`;
     $("#model").innerHTML=t.model.map(p=>`<p>${p}</p>`).join("");
     $("#mAns").textContent=t.ans; $("#mWhy").textContent=s.why; $("#mEv").textContent=s.ev;
     $("#debrief").innerHTML=`<div class="label">${s.debrief.title}</div>`+s.debrief.lines.map(l=>`<p style="margin:0">${l}</p>`).join("");
@@ -660,7 +660,7 @@ const MEDIA = {
       b.className="band "+k+(bi<revealed?" shown":" hidden-key");
       let inner;
       if(cs.length) inner=`<ol start="${cs[0].pos}">${cs.map(c=>`<li>${describe(c)}</li>`).join("")}</ol>`;
-      else inner=`<div class="implicit"><small>Not on any piece. The question you had to find</small><strong>${S().implicitQ}</strong></div>`;
+      else inner=`<div class="implicit"><small>This question isn't written on any piece. You had to work it out.</small><strong>${S().implicitQ}</strong></div>`;
       b.innerHTML=`<div class="key"><b>${k}</b><span>${SECTIONS[k].name}</span><em>${SECTIONS[k].q}</em></div>${inner}`;
       host.appendChild(b);
     });
