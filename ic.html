@@ -172,6 +172,22 @@ button{font:inherit;cursor:pointer}
 .pattern{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;align-items:start}
 @media (max-width:860px){.pattern{grid-template-columns:1fr}}
 .bands{display:grid;gap:10px}
+.simple{max-width:880px;display:grid;gap:14px}
+.simple h2{margin:0}
+.simple .lead{margin:0;color:var(--muted);font-size:16px}
+.flow{display:grid;gap:10px}
+.frow{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--k);border-radius:12px;padding:14px 16px}
+.frow .lt{width:46px;height:46px;border-radius:50%;background:var(--k);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:24px}
+.frow h3{margin:0;font-size:18px}
+.frow .mean{margin:2px 0 8px;color:var(--muted);font-size:14.5px}
+.frow .chips{display:flex;flex-wrap:wrap;gap:6px}
+.frow .chip{font-size:13px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+.frow .found{font-size:15px;font-weight:600;margin-top:2px}
+.answerbox{background:var(--a-soft);border:2px solid var(--a);border-radius:12px;padding:16px 18px}
+.answerbox .label{color:var(--a)}
+.answerbox p{font-size:17px;font-weight:600;line-height:1.5;margin:6px 0 0}
+.remember{margin:0;font-size:16px}
+.steps button:disabled{opacity:.45;cursor:not-allowed}
 .band{border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;grid-template-columns:108px minmax(0,1fr);overflow:hidden}
 .band .key{display:grid;align-content:center;justify-items:center;gap:2px;padding:10px 6px;background:var(--surface-2);border-right:1px solid var(--line);text-align:center}
 .band .key b{font-family:var(--display);font-size:40px;font-weight:800;line-height:1}
@@ -317,42 +333,14 @@ button{font:inherit;cursor:pointer}
   </section>
 
   <section class="stage" id="st3">
-    <div class="build-head">
-      <div>
-        <div class="eyebrow" id="patScen"></div>
-        <h2>Look at the sequence you just created</h2>
-        <p>Ask the room before you reveal each label. Let them name what each group of pieces is doing.</p>
-      </div>
-      <div class="row"><button class="btn plain" id="hideAll">Hide labels</button><button class="btn primary" id="revealNext">Reveal the first label</button></div>
-    </div>
-    <div class="pattern">
-      <div class="bands" id="bands"></div>
-      <div class="stack">
-        <div class="panel prompts">
-          <p class="ask">What did you instinctively do?</p>
-          <div class="label">Follow-up prompts</div>
-          <ol>
-            <li>Why did you put this piece first?<span>Listen for: you need to know what is happening before you hear there is a problem.</span></li>
-            <li>Where did the image and the voice note go, and why there?<span>Listen for: each one answers a question the piece before it raised. Move it and the story stops making sense.</span></li>
-            <li>What question was the story trying to answer?<span>Listen for: the question isn't always written down. Sometimes you have to work it out, and sometimes it comes from someone else, like a manager's voice note.</span></li>
-            <li>What do the last pieces do?<span>Listen for: they bring the evidence together and land the decision.</span></li>
-          </ol>
-        </div>
-        <div class="reveal-line" id="scqaLine" hidden>
-          You just used SCQA.
-          <div class="seq"><span class="c-s">Situation</span><i>→</i><span class="c-c">Complication</span><i>→</i><span class="c-q">Question</span><i>→</i><span class="c-a">Answer</span></div>
-        </div>
-        <div class="panel" id="debrief"></div>
-        <div class="panel">
-          <div class="label">The next step: lead with the answer</div>
-          <p style="margin:0">SCQA is how you work the story out. Once you know the answer, you can lead with it. Say what the listener needs first, then the reasons, then only the evidence that backs them up.</p>
-          <div class="minto">
-            <div class="tier"><b>Answer</b><span id="mAns"></span></div>
-            <div class="tier"><b>Reasons</b><span id="mWhy"></span></div>
-            <div class="tier"><b>Evidence</b><span id="mEv"></span></div>
-          </div>
-        </div>
-      </div>
+    <div class="simple">
+      <div class="eyebrow" id="patScen"></div>
+      <h2>How your story works</h2>
+      <p class="lead">Every clear story has four parts. Here is where your pieces fit.</p>
+      <div class="flow" id="flow"></div>
+      <div class="answerbox"><div class="label" id="ansLabel">The answer</div><p id="ansText"></p></div>
+      <div class="panel" id="debrief"></div>
+      <p class="remember"><b>Next time you brief someone:</b> say what's going on, what changed, what needs deciding, and then your answer.</p>
     </div>
   </section>
 </div>
@@ -492,7 +480,7 @@ const MEDIA = {
     $("#checkBtn").hidden = state==="solved";
     $("#toSpeak").hidden = state!=="solved";
     $("#hintBtn").hidden = state!=="wrong";
-    $("#showAnswer").hidden = !(state==="wrong" && attempts>=2);
+    $("#showAnswer").hidden = true; syncSteps();
   }
   function deal(){
     const base=RANGE();
@@ -505,7 +493,7 @@ const MEDIA = {
 
   function renderPicker(){
     $("#scenPick").innerHTML = SCEN.map((s,i)=>`<button class="scen" data-i="${i}" aria-pressed="${i===si}"><img src="${MEDIA.img[s.key]}" alt=""><span class="lvl">${s.lvl}</span><strong>${s.name}</strong><small>${s.skill}</small></button>`).join("");
-    $("#scenPick").querySelectorAll(".scen").forEach(b=>b.addEventListener("click",()=>{ si=+b.dataset.i; dealt=false; stopAudio(); renderPicker(); renderBrief(); }));
+    $("#scenPick").querySelectorAll(".scen").forEach(b=>b.addEventListener("click",()=>{ si=+b.dataset.i; dealt=false; solved=false; syncSteps(); stopAudio(); renderPicker(); renderBrief(); }));
   }
   // ICs skip the speaking step and go straight from the story to the pattern.
   const NOSPEAK = track==="ic";
@@ -533,7 +521,9 @@ const MEDIA = {
   }
 
   const stepBtns=[...document.querySelectorAll(".steps button")];
+  function syncSteps(){ stepBtns.forEach(b=>{ const lock=+b.dataset.go>=2 && !solved; b.disabled=lock; b.title=lock?"Put the story together first":""; }); }
   function go(n){
+    if(n>=2 && !solved) return;
     document.querySelectorAll(".stage").forEach((s,i)=>s.classList.toggle("on",i===n));
     stepBtns.forEach((b,i)=>{ if(+b.dataset.go===n) b.setAttribute("aria-current","step"); else b.removeAttribute("aria-current"); });
     if(n!==1) { player.pause(); }
@@ -669,8 +659,8 @@ const MEDIA = {
     const s=S(), t=s[track];
     $("#audience").innerHTML=`<div class="label">You are speaking to</div><h2>${t.who}</h2><div>They need to know:</div><ul>${t.needs.map(n=>`<li>${n}</li>`).join("")}</ul><div class="rule">You can't show them any of the pieces. Just tell them, in 60 seconds.</div>`;
     $("#model").innerHTML=t.model.map(p=>`<p>${p}</p>`).join("");
-    $("#mAns").textContent=t.ans; $("#mWhy").textContent=s.why; $("#mEv").textContent=s.ev;
-    $("#debrief").innerHTML=`<div class="label">${s.debrief.title}</div>`+s.debrief.lines.map(l=>`<p style="margin:0">${l}</p>`).join("");
+    
+    $("#debrief").innerHTML=`<div class="label">What to take away</div>`+s.debrief.lines.map(l=>`<p style="margin:0">${l}</p>`).join("");
   }
   $("#modelBtn").addEventListener("click",()=>{ const m=$("#model"); m.hidden=!m.hidden; $("#modelBtn").textContent=m.hidden?"Show model answer":"Hide model answer"; });
   $("#toPattern").addEventListener("click",()=>go(3));
@@ -694,28 +684,25 @@ const MEDIA = {
     if(c.type==="photo") return `<span class="fmt src">${c.label||"Photo"}</span>${c.alt}`;
     return `<span class="fmt">Voice note · ${c.who}</span>“${c.text}”`;
   }
+  const PLAIN = {S:["Situation","What's going on"],C:["Complication","What changed or went wrong"],Q:["Question","What needs to be decided"],A:["Answer","What we should do"]};
+  const chipName = c => c.type==="msg" ? (c.from || (c.text.split(" ").slice(0,6).join(" ")+"…")) : c.type==="photo" ? (c.label||"Photo").split(" · ")[0] : "Voice note · "+c.who;
   function buildBands(){
-    const host=$("#bands"); host.innerHTML="";
+    const host=$("#flow"); host.innerHTML="";
     const all=RANGE().map(piece);
-    ["S","C","Q","A"].forEach((k,bi)=>{
+    ["S","C","Q","A"].forEach(k=>{
       const cs=all.filter(c=>c.sec===k);
-      const b=document.createElement("div");
-      b.className="band "+k+(bi<revealed?" shown":" hidden-key");
-      let inner;
-      if(cs.length) inner=`<ol start="${cs[0].pos}">${cs.map(c=>`<li>${describe(c)}</li>`).join("")}</ol>`;
-      else inner=`<div class="implicit"><small>This question isn't written on any piece. You had to work it out.</small><strong>${S().implicitQ}</strong></div>`;
-      if(k==="A" && S().implicitA) inner=`<div>${inner}<div class="implicit" style="margin-top:10px"><small>This isn't on any card. It's what your team had to say.</small><strong>${S().implicitA}</strong></div></div>`;
-      b.innerHTML=`<div class="key"><b>${k}</b><span>${SECTIONS[k].name}</span><em>${SECTIONS[k].q}</em></div>${inner}`;
-      host.appendChild(b);
+      const row=document.createElement("div"); row.className="frow"; row.style.setProperty("--k",`var(--${k.toLowerCase()})`);
+      const body = cs.length ? `<div class="chips">${cs.map(c=>`<span class="chip">${c.pos}. ${chipName(c)}</span>`).join("")}</div>`
+                             : `<div class="found">${S().implicitQ}</div><div class="mean" style="margin:4px 0 0">Not on any card. You had to work it out.</div>`;
+      row.innerHTML=`<div class="lt">${k}</div><div><h3>${PLAIN[k][0]}</h3><p class="mean">${PLAIN[k][1]}</p>${body}</div>`;
+      host.appendChild(row);
     });
-    $("#scqaLine").hidden=revealed<4;
-    const labels=["Reveal the first label","Reveal the next label","Reveal the next label","Reveal the last label","All labels shown"];
-    $("#revealNext").textContent=labels[revealed]; $("#revealNext").disabled=revealed>=4;
+    const t=S()[track];
+    $("#ansLabel").textContent = S().implicitA ? "The answer your team had to work out" : "The answer in one line";
+    $("#ansText").textContent = t.ans;
   }
-  $("#revealNext").addEventListener("click",()=>{ if(revealed<4){revealed++; buildBands();} });
-  $("#hideAll").addEventListener("click",()=>{ revealed=0; buildBands(); });
 
-  renderPicker(); renderBrief();
+  renderPicker(); renderBrief(); syncSteps();
 })();
 </script>
 
