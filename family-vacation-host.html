@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Operation: Family Vacation · Facilitator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{
+  --bg:#0c131b; --panel:#141e29; --panel-2:#1b2836; --line:#2a3a4b; --ink:#e8eef4; --muted:#93a4b5; --amber:#f2a93b;
+  --red:#c8432b; --green:#2f9a63;
+  --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg);height:100%}
+#app{height:100%}
+body{margin:0;color:var(--ink);font-family:var(--body);font-size:clamp(17px,1.7vw,30px);line-height:1.45}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.05;text-wrap:balance}
+p{margin:0}
+button,input{font:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.muted{color:var(--muted)}
+.gate{min-height:100%;display:grid;place-items:center;padding:24px}
+.gate form{display:grid;gap:12px;width:min(420px,100%)}
+.gate input{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:12px 14px;font-family:var(--mono);font-size:20px;text-transform:uppercase;letter-spacing:.1em}
+.btn{border:0;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer;background:var(--amber);color:#1a1205;font-size:.8em}
+.btn.ghost{background:var(--panel);border:1px solid var(--line);color:var(--ink);font-weight:600}
+.stage{min-height:100%;display:grid;grid-template-rows:1fr auto}
+.slide{padding:clamp(20px,3.5vw,56px) clamp(20px,4.5vw,72px) 24px;display:flex;flex-direction:column;gap:clamp(12px,2vh,24px);overflow:auto}
+.kicker{font-family:var(--mono);color:var(--amber);font-size:.75em;letter-spacing:.06em}
+.title{font-size:clamp(40px,5.4vw,92px)}
+.h{font-size:clamp(30px,3.4vw,58px)}
+.lead{font-size:1.2em;max-width:48ch}
+.code{display:inline-flex;align-items:baseline;gap:18px;background:var(--panel);border:2px solid var(--amber);border-radius:16px;padding:12px 24px;width:max-content;max-width:100%}
+.code b{font-family:var(--mono);font-size:clamp(36px,4.6vw,80px);color:var(--amber);letter-spacing:.06em;line-height:1}
+.join{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,60px);align-items:center}
+#qr{background:#fff;padding:14px;border-radius:12px;width:max-content}
+.url{font-family:var(--mono);font-size:.75em;word-break:break-all;color:var(--muted)}
+.fam{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.fam div{border-radius:14px;padding:14px 16px;color:#fff;font-family:var(--display);font-weight:700;font-size:1.15em;line-height:1.1}
+.fam small{display:block;font-family:var(--body);font-weight:500;font-size:.62em;opacity:.9;margin-top:4px}
+.rules{display:grid;gap:14px}
+.rules div{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;font-size:1.25em;font-family:var(--display);font-weight:700}
+.rules i{font-style:normal;font-family:var(--mono);background:var(--amber);color:var(--bg);border-radius:50%;width:1.6em;height:1.6em;display:grid;place-items:center;font-size:.8em}
+.round{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(18px,3vw,48px);align-items:start;flex:1}
+.timer{display:grid;gap:10px;justify-items:start}
+.timer .t{font-family:var(--mono);font-weight:700;font-size:clamp(70px,10vw,190px);line-height:1}
+.timer .t.warn{color:var(--amber)}
+.timer .t.end{color:#ff8f7a}
+.timer .st{font-size:1.1em;font-weight:600;min-height:1.5em}
+.ctl{display:flex;gap:8px;flex-wrap:wrap}
+.inbox{display:grid;gap:12px}
+.mail{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;border-radius:14px;background:var(--panel);border:1px solid var(--line);padding:12px 16px;border-left:10px solid var(--k)}
+.mail.latest{border-color:var(--amber);border-left-color:var(--k);box-shadow:0 0 0 2px var(--amber)}
+.mail .to{font-family:var(--display);font-weight:700;font-size:1.1em}
+.mail .to small{display:block;font-family:var(--body);font-weight:500;font-size:.65em;color:var(--muted)}
+.mail b{font-family:var(--mono);color:var(--amber);font-size:1.5em;letter-spacing:.06em}
+.empty{border:1.5px dashed var(--line);border-radius:14px;padding:18px;color:var(--muted)}
+.cq{display:grid;gap:14px}
+.cqc{border-radius:14px;background:var(--panel);border:1px solid var(--line);padding:16px 20px;display:grid;gap:8px}
+.cqc h3{font-size:1.2em}
+.cqc .tx{font-size:1.1em}
+.cqc.on{border-color:var(--red);background:color-mix(in srgb,var(--red) 22%,var(--panel))}
+.cqc.off{opacity:.55}
+.cqc .tag{font-family:var(--mono);font-size:.65em;letter-spacing:.08em;text-transform:uppercase}
+.cqc.on .tag{color:#ff9a85}.cqc.off .tag{color:#7fd6a3}
+.chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.chain .lk{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start;min-height:7.5em;font-size:.85em}
+.chain .lk b{font-family:var(--mono);color:var(--amber);font-size:1.1em}
+.chain .lk.hid{border-style:dashed;color:transparent}
+.chain .lk.hid b{color:var(--muted)}
+.qs{margin:0;padding-left:1.3em;display:grid;gap:12px;font-size:1.1em}
+.maptab{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:.9em}
+.maptab td{padding:12px 14px;background:var(--panel);vertical-align:top}
+.maptab td:first-child{color:#fff;font-family:var(--display);font-weight:700;border-radius:12px 0 0 12px;width:18%}
+.maptab td:last-child{border-radius:0 12px 12px 0}
+.maptab .hid{color:transparent;background:repeating-linear-gradient(45deg,var(--panel),var(--panel) 10px,var(--panel-2) 10px,var(--panel-2) 20px)}
+.close{font-size:clamp(30px,3.6vw,62px);font-family:var(--display);font-weight:700;max-width:26ch;line-height:1.15}
+.chain.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.chain .lk.pt{border-color:var(--amber);min-height:5em}
+.chain .lk.pt b{font-family:var(--display);font-size:1.05em}
+.chain .lk.pt.hid b{color:transparent}
+.beo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.beo .st{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:8px;align-content:start;min-height:9em}
+.beo .st:nth-child(1){border-top:8px solid var(--red)}.beo .st:nth-child(2){border-top:8px solid #d69a1f}.beo .st:nth-child(3){border-top:8px solid var(--green)}
+.beo .sl{font-family:var(--display);font-weight:800;font-size:1.6em;line-height:1}
+.beo .ss{color:var(--muted);font-size:.75em;text-transform:uppercase;letter-spacing:.1em}
+.beo .st p{font-size:1.15em}
+.beo .st.hid{border-style:dashed}.beo .st.hid p,.beo .st.hid .ss{visibility:hidden}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-top:1px solid var(--line);background:#0a1017;font-size:14px}
+.bar .nav{display:flex;gap:8px;align-items:center}
+.bar .hint{color:var(--muted);max-width:70ch}
+@media (max-width:900px){.round{grid-template-columns:1fr}.fam{grid-template-columns:1fr 1fr}.chain{grid-template-columns:1fr 1fr}.join{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+(() => {
+  const VAULT = {"s":"5Q3KXAUbD09zM4UKakl1zg==","i":"jntzIRfqyMTnEWsg","c":"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"};
+  const JOIN_FILE = "family-vacation.html";
+  const KEY = "fv-host-v1";
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  async function decrypt(blob, code) {
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(code), "PBKDF2", false, ["deriveKey"]);
+    const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64(blob.s), iterations: 120000, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(blob.i) }, key, b64(blob.c))));
+  }
+  let V = null, i = 0, tick = null;
+  let T = { 1: { el: 0, run: null, sent: [] }, 2: { el: 0, run: null, sent: [] }, cq: {}, chain: 0, map: 0, read: { el: 0, run: null } };
+  try { const saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (saved) { T = Object.assign(T, saved.T); i = saved.i || 0; } } catch (e) {}
+  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify({ T, i })); } catch (e) {} };
+  const roleOf = id => V.roles.find(r => r.id === id);
+  const elapsed = t => t.el + (t.run ? (Date.now() - t.run) / 1000 : 0);
+  const fmt = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
+
+  function gate() {
+    $("#app").innerHTML = `<div class="gate"><form id="g" autocomplete="off"><h1>Facilitator</h1><p class="muted">Enter the facilitator code.</p><input id="gi" aria-label="Facilitator code"><button class="btn">Open</button><p id="gm" class="muted"></p></form></div>`;
+    $("#g").onsubmit = async e => {
+      e.preventDefault(); $("#gm").textContent = "Checking…";
+      try { V = await decrypt(VAULT, $("#gi").value.trim().toUpperCase()); boot(); }
+      catch (err) { $("#gm").textContent = "That code didn't work."; }
+    };
+  }
+
+  const SLIDES = ["join", "brief", "read", "r1", "s1", "r2", "s2", "chain", "ask", "map", "close"];
+  const HINT = {
+    join: "Everyone scans, types the event code and picks their table's role.",
+    brief: "Read this aloud. Hand each table its sealed envelope.",
+    read: "Three minutes of silent reading. Start the timer.",
+    r1: "Have everyone type the round code, then press Start. Hand the IFC table (Mum) its cash envelope as soon as the round starts.",
+    s1: "Stop all talk. Check the vendor receipts and mark each consequence. Read the ones that apply aloud.",
+    r2: "Have everyone type the round code, then press Start. Say nothing about the hotel.",
+    s2: "Check the hotel receipt and the activity receipts. Then fill in the final ledger on the flipchart.",
+    chain: "Let the room build the chain. Reveal each box only after they've named it, then the three pressure tests.",
+    ask: "Pick the incident, then reveal Blame, Explain and Own one at a time. Use the times from your notes.",
+    map: "Ask each table for a real moment before you reveal its row.",
+    close: "Each person answers all three on their phone or on paper.",
+  };
+
+  function boot() {
+    clearInterval(tick);
+    tick = setInterval(() => { if (["r1", "r2", "read"].includes(SLIDES[i])) update(); }, 250);
+    document.onkeydown = e => { if (e.target.tagName === "INPUT") return; if (e.key === "ArrowRight" || e.key === "PageDown") go(1); if (e.key === "ArrowLeft" || e.key === "PageUp") go(-1); };
+    draw();
+  }
+  function go(d) { i = Math.max(0, Math.min(SLIDES.length - 1, i + d)); persist(); draw(); }
+
+  function draw() {
+    const k = SLIDES[i];
+    let h = "";
+    if (k === "join") {
+      h = `<div class="kicker">VOLTAS · OWNERSHIP AND ACCOUNTABILITY</div><h1 class="title">Operation: Family Vacation</h1>
+        <div class="join"><div id="qr"></div><div style="display:grid;gap:16px"><p class="lead">Scan, type the event code, then choose the department on your table's sign.</p>
+        <div class="code"><span class="muted">Event code</span><b>${esc(V.event)}</b></div><p class="url" id="url"></p><button class="btn ghost" id="ns" style="justify-self:start">Start a fresh session</button></div></div>`;
+    } else if (k === "brief") {
+      h = `<div class="kicker">THE BRIEF</div><h1 class="h">One family. Six days in Sundarpur. ₹5,00,000.</h1>
+        <div class="fam">${V.roles.map(r => `<div style="background:${r.color}">${esc(r.dept)}<small>plays ${esc(r.short)}</small></div>`).join("")}<div style="background:${V.kids.color}">Your facilitator<small>plays the kids, Aarav and Tara. Expect them at your table.</small></div></div>
+        <div class="rules">${V.rules.map((t, n) => `<div><i>${n + 1}</i><span>${esc(t)}</span></div>`).join("")}</div>`;
+    } else if (k === "read") {
+      h = `<div class="kicker">BEFORE ROUND 1</div><h1 class="h">Read your role card in silence</h1>
+        <div class="timer"><div class="t" id="tt"></div><div class="ctl"><button class="btn" id="go"></button><button class="btn ghost" id="rs">Reset</button></div></div>
+        <p class="lead muted">Money and slips are in your envelope. Don't open anything else yet.</p>`;
+    } else if (k === "r1" || k === "r2") {
+      const n = k === "r1" ? 1 : 2;
+      h = `<div class="kicker">ROUND ${n} OF 2 · 15 MINUTES</div>
+        <div class="round"><div class="timer"><div class="t" id="tt"></div><div class="st" id="ts"></div>
+          <div class="code"><span class="muted">Round code</span><b>${esc(V.roundCodes[n])}</b></div>
+          <p style="font-size:.85em">Everyone types this code now. Your table's messages will arrive on your phones during the round.</p>
+          <div class="ctl"><button class="btn" id="go"></button><button class="btn ghost" id="rs">Reset</button></div></div>
+        <div><h2 class="h" style="font-size:1.6em;margin-bottom:12px">Messages sent</h2><div class="inbox" id="ib"></div></div></div>`;
+    } else if (k === "s1" || k === "s2") {
+      const n = k === "s1" ? 1 : 2;
+      const list = V.conseq.filter(c => c.when === `End of Round ${n}`);
+      h = `<div class="kicker">END OF ROUND ${n}</div><h1 class="h">What happens now</h1>
+        <div class="cq">${list.map(c => { const st = T.cq[c.id]; return `<div class="cqc ${st === true ? "on" : st === false ? "off" : ""}">
+          <div class="tag">${st === true ? "This happened" : st === false ? "Avoided" : "Checking…"}</div>
+          <h3>${esc(c.if)}</h3>${st === true ? `<p class="tx">${esc(c.text)}</p>` : ""}
+          <div class="ctl"><button class="btn ghost" data-c="${c.id}" data-v="1">It applies</button><button class="btn ghost" data-c="${c.id}" data-v="0">Avoided</button></div></div>`; }).join("")}</div>`;
+    } else if (k === "chain") {
+      const n = V.chain.length;
+      h = `<div class="kicker">DEBRIEF · 1</div><h1 class="h">Where did this start?</h1>
+        <div class="chain c3">${V.chain.map((c, j) => `<div class="lk ${j < T.chain ? "" : "hid"}"><b>${j + 1}</b><span>${esc(c)}</span></div>`).join("")}</div>
+        <div class="kicker" style="margin-top:4px">RUNNING ALONGSIDE</div>
+        <div class="chain c3">${V.pressure.map((c, j) => `<div class="lk pt ${n + j < T.chain ? "" : "hid"}"><b>${esc(c[0])}</b><span>${esc(c[1])}</span></div>`).join("")}</div>
+        <div class="ctl"><button class="btn" id="rv">Reveal next</button><button class="btn ghost" id="rh">Hide all</button></div>`;
+    } else if (k === "ask") {
+      const inc = V.beo.incidents[T.inc || 0];
+      h = `<div class="kicker">DEBRIEF · 2 · BLAME, EXPLAIN, OWN</div>
+        <div class="seg">${V.beo.incidents.map((x, j) => `<button class="btn ${j === (T.inc || 0) ? "" : "ghost"}" data-inc="${j}">${j + 1}. ${esc(x.title)}</button>`).join("")}</div>
+        <h1 class="h">${esc(inc.title)}</h1>
+        <div class="beo">${V.beo.stages.map((s, j) => `<div class="st ${j < (T.stage || 0) ? "" : "hid"}"><div class="sl">${esc(s[0])}</div><div class="ss">${esc(s[1])}</div><p>${esc(s[2])}</p></div>`).join("")}</div>
+        <div class="ctl"><button class="btn" id="sv">Next step</button><button class="btn ghost" id="sr">Start again</button></div>`;
+    } else if (k === "map") {
+      h = `<div class="kicker">DEBRIEF · 3</div><h1 class="h">Where this happens at Voltas</h1>
+        <table class="maptab">${V.map.map((m, n) => `<tr><td style="background:${m.color}">${esc(m.team)}<small style="display:block;font-family:var(--body);font-weight:500;font-size:.75em;opacity:.9">played ${esc(m.family)}</small></td><td class="${n < T.map ? "" : "hid"}"><b>${esc(m.voltas)}</b></td><td class="${n < T.map ? "" : "hid"}">${esc(m.moment)}</td></tr>`).join("")}</table>
+        <div class="ctl"><button class="btn" id="rv">Reveal next</button><button class="btn ghost" id="ra">Reveal all</button></div>
+        ${T.map >= V.map.length ? `<div class="code"><span class="muted">On your phone</span><b>${esc(V.debriefCode)}</b></div>` : ""}`;
+    } else if (k === "close") {
+      h = `<div class="kicker">BEFORE YOU GO</div><p class="close">Write down three things.</p><ol class="qs">${V.commit.map(c => `<li>${esc(c)}</li>`).join("")}</ol>
+        <div class="code"><span class="muted">On your phone</span><b>${esc(V.debriefCode)}</b></div>`;
+    }
+    $("#app").innerHTML = `<div class="stage"><section class="slide">${h}</section>
+      <nav class="bar"><span class="hint">${esc(HINT[k])}</span><span class="nav"><span class="muted">${i + 1} / ${SLIDES.length}</span>
+      <button class="btn ghost" id="pv">Back</button><button class="btn" id="nv">Next</button></span></nav></div>`;
+    $("#pv").onclick = () => go(-1); $("#nv").onclick = () => go(1);
+    if (k === "join") {
+      const url = new URL(JOIN_FILE, location.href).href; $("#url").textContent = url;
+      try { new QRCode($("#qr"), { text: url, width: 260, height: 260 }); } catch (e) { $("#qr").hidden = true; }
+      $("#ns").onclick = () => { if (!confirm("Clear all timers, messages and reveals for a new group?")) return; T = { 1: { el: 0, run: null, sent: [] }, 2: { el: 0, run: null, sent: [] }, cq: {}, chain: 0, map: 0, inc: 0, stage: 0, read: { el: 0, run: null } }; persist(); draw(); };
+    }
+    if (k === "read" || k === "r1" || k === "r2") {
+      const t = k === "read" ? T.read : T[k === "r1" ? 1 : 2];
+      $("#go").onclick = () => { if (t.run) { t.el = elapsed(t); t.run = null; } else t.run = Date.now(); persist(); update(); };
+      $("#rs").onclick = () => { if (!confirm("Reset this timer" + (k === "read" ? "?" : " and its messages?"))) return; t.el = 0; t.run = null; if (t.sent) t.sent = []; persist(); draw(); };
+      if (false) $("#nx").onclick = () => { const n = k === "r1" ? 1 : 2; const next = V.triggers.find(x => x.round === n && !t.sent.includes(x.n)); if (next) { t.sent.push(next.n); persist(); update(); } };
+      update();
+    }
+    document.querySelectorAll("[data-c]").forEach(b => b.onclick = () => { T.cq[b.dataset.c] = b.dataset.v === "1"; persist(); draw(); });
+    if (k === "chain") { const tot = V.chain.length + V.pressure.length; $("#rv").onclick = () => { T.chain = Math.min(tot, T.chain + 1); persist(); draw(); }; $("#rh").onclick = () => { T.chain = 0; persist(); draw(); }; }
+    if (k === "ask") {
+      document.querySelectorAll("[data-inc]").forEach(b => b.onclick = () => { T.inc = +b.dataset.inc; T.stage = 0; persist(); draw(); });
+      $("#sv").onclick = () => { T.stage = Math.min(3, (T.stage || 0) + 1); persist(); draw(); };
+      $("#sr").onclick = () => { T.stage = 0; persist(); draw(); };
+    }
+    if (k === "map") { $("#rv").onclick = () => { T.map = Math.min(V.map.length, T.map + 1); persist(); draw(); }; $("#ra").onclick = () => { T.map = V.map.length; persist(); draw(); }; }
+  }
+
+  let lastSig = "";
+  function update() {
+    const k = SLIDES[i];
+    const isRead = k === "read";
+    const len = isRead ? 180 : 900;
+    const t = isRead ? T.read : T[k === "r1" ? 1 : 2];
+    const e = elapsed(t), left = len - e;
+    const tt = $("#tt"); if (!tt) return;
+    tt.textContent = fmt(left);
+    tt.className = "t" + (left <= 0 ? " end" : left <= 120 ? " warn" : "");
+    $("#go").textContent = t.run ? "Pause" : e > 0 ? "Resume" : "Start";
+    if (left <= 0 && t.run) { t.el = len; t.run = null; persist(); }
+    if (isRead) return;
+    const n = k === "r1" ? 1 : 2;
+    $("#ts").textContent = left <= 0 ? "Time. Stop all talk." : left <= 120 ? "Two minutes left in this round." : "";
+    V.triggers.filter(x => x.round === n && e > 0 && e >= x.offset && !t.sent.includes(x.n)).forEach(x => { t.sent.push(x.n); persist(); });
+    const sig = t.sent.join(",");
+    if (sig !== lastSig || !$("#ib").dataset.drawn) {
+      lastSig = sig;
+      const sent = V.triggers.filter(x => t.sent.includes(x.n)).sort((a, b) => t.sent.indexOf(a.n) - t.sent.indexOf(b.n)).reverse();
+      $("#ib").innerHTML = sent.length ? sent.map((x, j) => { const r = roleOf(x.to); return `<div class="mail${j === 0 ? " latest" : ""}" style="--k:${r.color}"><div class="to">Message for ${esc(r.dept)}<small>Playing ${esc(r.short)} · only this table can see it</small></div><b>${fmt(x.offset)}</b></div>`; }).join("") : `<div class="empty">No messages yet. They arrive once the timer is running.</div>`;
+      $("#ib").dataset.drawn = "1";
+    }
+  }
+  gate();
+})();
+</script>
+</body>
+</html>

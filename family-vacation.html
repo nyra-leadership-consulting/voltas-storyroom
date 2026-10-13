@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Operation: Family Vacation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#0c131b; --panel:#141e29; --panel-2:#1b2836; --line:#2a3a4b; --ink:#e8eef4; --muted:#93a4b5;
+  --amber:#f2a93b; --team:#2563a8;
+  --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5}
+.wrap{max-width:600px;margin:0 auto;padding:16px 16px 48px;display:grid;gap:14px}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.08;text-wrap:balance}
+p{margin:0}
+button,input,textarea{font:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.muted{color:var(--muted)}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--muted)}
+.start{display:grid;gap:18px;padding-top:12px}
+.start .kick{font-family:var(--mono);font-size:14px;color:var(--amber);letter-spacing:.06em}
+.start h1{font-size:42px}
+.roles{display:grid;gap:10px}
+.rbtn{display:grid;gap:2px;text-align:left;border:0;border-radius:14px;padding:16px 18px;color:#fff;cursor:pointer;font-weight:700;font-size:22px;font-family:var(--display)}
+.rbtn small{font-family:var(--body);font-size:14px;font-weight:500;opacity:.9}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;justify-self:start;padding:4px 0;font-size:15px}
+.band{background:var(--team);border-radius:14px;padding:14px 16px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.band h2{font-size:28px}
+.band small{display:block;font-size:14px;opacity:.9}
+.code{display:grid;grid-template-columns:1fr auto;gap:8px}
+.code input{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:12px 14px;font-family:var(--mono);font-size:19px;text-transform:uppercase;letter-spacing:.08em;min-width:0}
+.code input::placeholder{text-transform:none;letter-spacing:normal;font-family:var(--body)}
+.btn{border:0;border-radius:10px;padding:12px 18px;font-weight:700;font-size:17px;cursor:pointer;background:var(--amber);color:#1a1205}
+.msg{font-size:14px;min-height:20px;color:var(--muted)}
+.msg.err{color:#ff8f7a}
+.msg.ok{color:#7fd6a3}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:15px;font-weight:600;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabs .dot{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--amber);color:#1a1205;font-size:12px;font-weight:700;text-align:center}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 16px;display:grid;gap:10px}
+.panel h3{font-size:22px}
+.sec{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--team);filter:brightness(1.7);margin-top:4px}
+ul.b{margin:0;padding-left:20px;display:grid;gap:6px}
+.dead{border-left:4px solid var(--amber);padding:8px 12px;background:var(--panel-2);border-radius:0 10px 10px 0;font-weight:600}
+.win{font-style:italic;color:var(--amber)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{text-align:left;vertical-align:top;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:13px}
+td:first-child{font-weight:600}
+tr.me td{background:color-mix(in srgb,var(--team) 30%,transparent)}
+.scroll{overflow-x:auto}
+.mcard{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--panel)}
+.mcard header{background:var(--team);color:#fff;padding:10px 16px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.mcard header h3{font-size:22px}
+.mcard header small{font-family:var(--mono);font-size:12px;opacity:.85;white-space:nowrap}
+.mcard .body{padding:14px 16px;display:grid;gap:10px;font-size:18px}
+.mcard.new{outline:3px solid var(--amber);outline-offset:2px}
+.wait{text-align:center;padding:22px 14px;border:1.5px dashed var(--line);border-radius:14px;color:var(--muted)}
+.map{display:grid;gap:10px}
+.map .row{background:var(--panel-2);border-radius:10px;padding:12px;border-left:5px solid var(--k)}
+.map .row b{display:block;font-family:var(--display);font-size:19px}
+.map .row.mine{outline:2px solid var(--ink)}
+textarea{width:100%;min-height:90px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:12px;font-size:17px}
+.paper{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+@media (min-width:960px){ body{font-size:18px} .wrap{max-width:760px;padding-top:28px} }
+</style>
+</head>
+<body>
+<main class="wrap" id="app" aria-live="polite"></main>
+<script>
+(() => {
+  const ROLES = [{"id":"gp","dept":"Corp Finance","short":"Nana and Nani","name":"Nana and Nani","tag":"The grandparents","color":"#6B46C1","story":["You are paying for a share of this trip and you are holding ₹80,000 of the family's ₹5,00,000 as a reserve. You agreed with Dad that the reserve is for real needs, decided properly, and you meant it.","You are in your seventies. Long journeys tire you out, and you would want to be told before any travel plan changes. Of everything on offer in Sundarpur, the jungle safari is the only day out both of you can share with the grandchildren, and you would love to."],"hold":["₹80,000 in cash (your reserve)","Two Reserve release slips"],"know":["The reserve is part of the ₹5,00,000. It is the family's last cushion.","Dad has told you nothing about any problem so far, and you haven't seen the plan or the budget in a week.","Before anything else, you want Dad to walk you through the plan and what has already been spent. As the family's last cushion, it's your job to know."],"deadlines":["The safari slot closes at the end of Round 2. If Dad brings you a case, decide in time for Kabir to book it.","At the end of Round 2, check that anything you released was spent on what you named."],"rules":["You release money only when Dad gives you a written case. It must say what went wrong, who is responsible and what he has already cut.","You will not pay for anything that was booked without approval.","Every release slip names what the money is for. The money may be used for that and nothing else.","If Dad switches to the train, he needs one of you to initial his cancellation slip. Your initials confirm you were told. They are not your approval."],"win":"The trip happens, the reserve is used for something that deserves it, and nobody hides a problem from you.","authKey":"Nana and Nani · Corp Finance","budget":null,"file":null,"prices":null},{"id":"dad","dept":"UPBG F&C","short":"Dad","name":"Dad","tag":"Rohit · owns the family budget","color":"#2563A8","story":["You own the trip budget of ₹5,00,000. You run the Hotel line and the Transport and food line yourself, Mum runs the Kids' Activities budget, and Nana and Nani hold the reserve.","Last week at dinner the kids asked about the theme park. You said, \"Theme park on Saturday, done, it's sorted.\" Everyone was at the table, including Kabir. Nobody filled in an approval slip, and you haven't thought about it since."],"hold":["₹1,80,000 in cash: the hotel balance","Cab booking voucher, Sundarpur Cabs, ₹28,000","Transfer slips, Release slips, a Cancellation slip and a Written case form"],"know":["Transport and food is ₹70,000: cabs ₹28,000 (airport transfers both ways ₹20,000, local cab ₹8,000) and food ₹42,000. Food cannot go lower.","The flight lands on Saturday 12 December at 3:30 PM. The airport cab to the resort takes two hours.","You know the reserve exists, but you cannot touch it. Only Nana and Nani can release it.","Flights, the hotel booking and the local cab (₹8,000) can't be changed or refunded."],"deadlines":["End of Round 2: the hotel balance of ₹1,80,000 must be paid, or the booking is cancelled and the ₹50,000 deposit is lost. Kabir pays it, but only against your signed release slip."],"rules":["The ₹1,80,000 in your envelope is committed to the hotel. You can release it to Kabir to pay the hotel, and for nothing else.","Money reaches Mum's budget only on your signed transfer slip: from Transport and food, or reserve money passed on for the purpose Nana and Nani named.","To get reserve money you must give Nana and Nani a written case."],"win":"The trip happens within ₹5,00,000, nobody loses money to a missed deadline, and the people affected by your decisions hear about them from you.","authKey":"Dad · UPBG F&C","budget":[["Flights","₹80,000","Paid"],["Hotel","₹2,30,000","₹50,000 deposit paid · ₹1,80,000 balance due by the end of Round 2"],["Transport and food","₹70,000","Cabs ₹28,000 booked · food ₹42,000, already the minimum"],["Kids' Activities budget","₹40,000","Mum's budget · hard limit"],["Grandparents' reserve","₹80,000","Held by Nana and Nani"],["Total","₹5,00,000",""]],"file":null,"prices":null},{"id":"mum","dept":"Internal Financial Control","short":"Mum","name":"Mum","tag":"Meera · runs the Kids' Activities budget","color":"#1F7A4D","story":["You run the Kids' Activities budget: ₹40,000 for the whole trip. Every activity needs your signed approval slip before Kabir books it. You have planned to give the kids two or three good days out.","As far as you know, nothing has been booked yet. Your cash envelope for the line reaches you when Round 1 starts."],"hold":["Your cash envelope for the Kids' Activities budget (handed to you at the start of Round 1)","Approval slips","The Sundarpur price list (below)"],"know":["Your limit is hard. You cannot spend beyond the money in your budget.","Your line can grow only through a written transfer signed by Dad.","The kids' wish list, in order: 1. Adventure Park (Dad said it's sorted). 2. Jungle safari with Nana and Nani. 3. Splash water park. 4. Lake boat ride. 5. Go-karting.","Your facilitator plays the kids. They will come to you, and to everyone else. They can ask for anything, and only you can approve."],"deadlines":["Activities only happen if they are booked by the end of Round 2."],"rules":["Kabir books an activity only with your signed approval slip, and the slip must confirm that the money is there.","If you need more money, the request goes to Dad. You cannot go to the grandparents yourself."],"win":"The kids get the best trip the money allows, and every rupee you approve was really available.","authKey":"Mum · IFC","budget":null,"file":null,"prices":[["Sundarpur Adventure Park (theme park)","₹32,000","Kids, Mum, Dad and Kabir"],["Jungle safari","₹24,000","Whole family, including Nana and Nani. The only activity both grandparents can join"],["Lake boat ride","₹14,000","Whole family except Nana"],["Splash water park","₹18,000","Kids, Mum, Dad and Kabir"],["Go-karting","₹12,000","Kids, Dad and Kabir"]]},{"id":"kab","dept":"Shared Services","short":"Kabir","name":"Kabir","tag":"The cousin · makes the bookings","color":"#B7791F","story":["You make the family's bookings and pay the vendors. You booked the flights and the hotel weeks ago.","Last week at dinner Dad said, \"Theme park on Saturday, done, it's sorted.\" You wanted to save everyone time, so that night you bought the Adventure Park tickets for Saturday 12 December on the family activity card, which draws on Mum's Kids' Activities budget, for ₹32,000. Nobody gave you an approval slip. You haven't mentioned it to Mum yet."],"hold":["The booking file (below)","No cash. You pay vendors with money the owners give you, against signed slips."],"know":[],"deadlines":["End of Round 2: the hotel balance of ₹1,80,000 is due. If it isn't paid, the booking is cancelled and the ₹50,000 deposit is lost. You need Dad's signed release slip and his cash to pay it."],"rules":["You can book an activity only with Mum's signed approval slip confirming the money is available.","You can pay the hotel only with Dad's signed release slip.","Every payment goes to the vendor desk (the facilitator) with cash and the right slip."],"win":"Every booking the family needs is made on time, and every booking you make has the right approval.","authKey":"Kabir · Shared Services","budget":null,"file":[["Flights","Out: Saturday 12 Dec, lands 3:30 PM · Back: Thursday 17 Dec · ₹80,000 · paid"],["Hotel","Sundarpur Hills Resort, 12 to 17 Dec · ₹2,30,000 · ₹50,000 deposit paid · ₹1,80,000 balance due by the end of Round 2"],["Cabs","Sundarpur Cabs · airport transfers both ways (two hours each way) and local cab for the week · ₹28,000 · booked"],["Adventure Park","Ref SAP-4471 · Saturday 12 Dec · gates close 5 PM · ₹32,000 · paid from the family activity card · non-refundable"]],"prices":null}];
+  const COMMON = {"jobs":[["Lead","Speaks for the team at other tables. Hand this job to someone new in Round 2."],["Treasurer","Holds the cash and the slips. Nothing leaves the table without the team agreeing."],["Signer","Signs slips, only after the team agrees."],["Scribe","Keeps the decision log: the time, what was decided, and who was told."],["Runners","Everyone else. Carry messages and payments, and listen at other tables."]],"trip":"Sundarpur, Saturday 12 December to Thursday 17 December. The family: Nana and Nani (the grandparents), Dad (Rohit), Mum (Meera), the kids (Aarav, 12, and Tara, 9) and cousin Kabir, who handles the family's bookings. Total budget ₹5,00,000.","authority":[["Nana and Nani · Corp Finance","Release reserve money only against Dad's written case, which must say what went wrong and what he has already cut. The release slip names what the money is for. They will not pay for anything booked without approval."],["Dad · UPBG F&C","The hotel balance is committed: he can release it to Kabir to pay the hotel and for nothing else. Can approve a written transfer into the Kids' Activities budget from Transport and food, or of reserve money Nana and Nani released for a named purpose. Cannot touch the reserve himself. Must tell the grandparents before switching to the train."],["Mum · IFC","Approves activities up to the money in the Kids' Activities budget (₹40,000 to start). Cannot go over it without a written transfer from Dad."],["Kabir · Shared Services","Books and pays vendors. Activities need Mum's signed approval slip. The hotel balance needs Dad's signed release slip."],["Kids · played by the facilitator","Ask anyone for anything. Cannot authorise or pay for anything."]]};
+  const EVENT_BLOB = {"s":"k28xrFxaIuHu4g/wSGL9zw==","i":"Ukxx7gILLHNnermr","c":"ed7oHGl+pH43WmGmfqLFuNwieTiTh/dG"};
+  const BLOBS = [{"s":"uLqCyVoOAJuTcscKG0fyXQ==","i":"ysjsBwuXdTNawaiX","c":"BWAilZtlcV2m0ryLbEbzLaBW3V48Ca9o99LLXZaz/K3TDyPt7xLnY6Ep+PubUe/KleGTznXk71RqIPxGJNF3aomlHYKYHIBgCCCujRWQRAO9vJod8u3+r4oibu2CFoHXQmJFIJP7LApVcTc9vn92X1tRNu0Ot4ElBpvhwjwdLPuEBtfI2RQl998LSIrwcJaZZh3TMd2Pnd3/m5khCP5dVWQXB1VcuNCpRjZ35O51zSm9FMwcmEGmYuEBLhx4DLWdsMeLwnCb5WElg01lx79Nu8BxuRunJePawRu/MXzGXD1hoswK31NigFIKrQYrI+8PIs1NP0HnjJpdAogC2Z/5zK06OnMyccNaqkKN7E/7IhznuSQY4rwwsyPOfBAEYMu+7BHnYWs27sBGLtppxEQC465uCpteCLYKsfAYo68QX4i5127Kosb52XYUeBKrQbh9GZcX5lIivB35OiDj429BKerx7QcV/B0JKHda5/Q1towOSYfU5ZDwPOWyHqJ77ZgiKiTEPXB/TemZJ9E6ClJuGgpSrJxAWL8dMSbXMdrGv0HetDrjVgttvJtxgMTK0p8GARte/wxZnONAMsPd5p89/sJrBN6VybIwJp0rRkF3AbwZ8cwskiTcTG/fH0vnu29wL2Hikv3u6dIpRq+jGXmBTDohwl0ry+Y5pewmVW5k8bnEBCRdax32wxXyFxO4gQ6oCEYsC7CyLmXRSdt6opnlv5eA8s52LCLzlGkSxeTwaHto4Ie/RW9nZapqOvnH4Nc/fakH41Wl0BrhlhnTzycHsVCo04jv2q76OuRNdSU+Q/WM3DCs4CJlHOgmQS+fNCVAwW65GOi9708zo+g+qLdi7DCktZRzOQmww96t8Ix8NjDZK9xWN1ij/wQN1dSI1HpFvWPPwS941U3qBe26RKaOSivR+vbxW9iLO74y3CwC/OeoVey5JRDRo81Y590OgisduGmbLk+L+l9r3jCcT1jUdILED292DUhDJvRUYM9cgRX9ypAQ5INjRyfhn3EFbzaQUoEnC/WIPGJVz3ZDqsmVpHBdSpv37pCJN2Gpdf5NPRaN3z/gW+LdZXpKvB+Zd03ecXVBzUyCPXM1e4/dLPX3UVKfkbk94KlnwS76d8I7iE+jUmTBNLwSuewJdMKW2+XnDw2Z+/9poaKtP3nyYgXiEBvhqEZn+jN1lIzibu10zqAGk9AKA5ZMLC6qnxydhB/aKhCsmWEZH3aWgaCb7IJ/SfJAozMvBDoOzGAkp7aRqZMZqRJgQ3O0CJV2WQgQl4bSv903aaPz0aTYXiBoezXPPtMXGmxsnulhYHYROsXbtPXjXScptDTRef5rsd0hMTBFAZdwrucTbRr3rOvfChCX+UFHw0VYLYAB7zsh5WcLSQtncHhmBV3rqPt+WK+ZsVKjNSbgFIYwg2fU6mN42sJR0P10Yl4ka/rbqQ2to9sfeQkFavSDKTTNDWGv8uGISE4mTd7Z6YhXAF3PXYMKTGdq+9YAY+Jqh+oQE0PciFRIo/fIjL6topR1cTCdyFGPhjMxpwHldO2eSvitY0TcmNmTfJ6nqR5WyOOog68wWgas+6ojARNoMsURtLK9/GXTR+1aKow4BSsWfRCuWSWwUVqUYp8147pEr0kLWX31ESAwY7TbFZdgYdU+f5buc7vu7l6SgYLr8vTXM//J9M7F2DvYoZnaeA=="},{"s":"n4vNtq/LDkjsbaINs4XRXw==","i":"SslyYIW67QHHMQXE","c":"KtBCKwkB/nzXrlhgKYD5jedo5H5Avs1E+5UD0N7vVJwu4VImzX+GeuaqfDI0rrhx0w0U73bt7T5wGI6YSHpg9BaZn9uos3MJ2rMYWCZLNiUpkm9KrQFQSVKxjhwDBQCGAOxcmKB+2R81eVOWlNPzVAA9HvYQrN3jZrC+eHNXPdmFRgrEexWHwDkndZJVe/fRRRmSH4sAR+yijZaeNgAzpu8uEoFHoDdNQ2pHO5tx2jOvSs00zisHfkWG2K7vlYCMH4RbE3oGe8btJgvn9Zb/Gyr2DFxdqg8ouGVQZ7SwceSAAL8GKybzBz7I+/mwEwDrh8DFl4qqAyLjdZvtG6892+WMYkajONVHAz5Z7v1FyeCEreTT2zvZMGtXSKhCxjkIA7kc/c5g+gm58qPrwTnh89OsZwirux60m3GMXdMds6FGEExIsVAZkhYsmskT86NgPgAR9z8Ud6mKDrKLYKGcXsnbOOO6JxM62hP1aq4I8cREMpkq7zWq0V8RSa8IJll9F+yX5Cy0KidPUhA5N6Fioe8BNJMrYTh6D6OKrOyie/dFtcK9vla85alh0T+/q4tdkzrbfb8sQdQrXfB0dsGnR8z4XnMPUPhtGOjDI92vGfAQpmGfY1Qk08t8Q5ikYsCCF5jWsW1PYilMI8P1TT15eHqlPd5HLbAQrjvdtTLVcTbuLL6MzG8z8+TMJA04iufAJIk83TaMDEARwTFHCdL0uLmAQgdaKepndbwVIgU1pgjngtYxampKtb7eK9qzDM1zj5UEnPZ15qjh8hQ3XsdflNVzk5MeviBe9+VCvynd9O+gduyA0d7KQb3eZCmvKakHEYVv2dJD8MdbQgTlDhi9ibUNjsshayBtzCdq+QNCdzVWV2upMeckNtniv4zvQzd2aaQHFLiQFeRcS87ZPINW1nSq"},{"s":"UDocgUfPhNc9cwXXdLr0JQ==","i":"YA1Z3HbI2EnEILQU","c":"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"}];
+  const STORE = "fv-live-v2";
+  const BUILD = "mv6r12rw";
+  const store = (() => { try { return window.sessionStorage; } catch (e) { return null; } })();
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const fresh = () => ({ joined: false, role: null, rounds: {}, debrief: null, tab: "card", seen: 0, known: 0, build: BUILD });
+  let S = fresh();
+  try { S = Object.assign(S, JSON.parse((store && store.getItem(STORE)) || "{}")); } catch (e) {}
+  if (S.build !== BUILD) S = Object.assign(fresh(), { joined: S.joined, role: S.role });
+  if (/[?&]reset\b/.test(location.search)) { S = fresh(); history.replaceState(null, "", location.pathname); }
+  const save = () => { try { store && store.setItem(STORE, JSON.stringify(S)); } catch (e) {} };
+  const role = () => ROLES.find(r => r.id === S.role);
+  // Messages arrive on this phone's own clock, counted from when the round code was typed.
+  const arrived = () => Object.values(S.rounds || {}).flatMap(R => R.msgs.filter(m => Date.now() >= R.t + m.offset * 1000)).sort((a, b) => a.n - b.n);
+  const pending = () => Object.values(S.rounds || {}).some(R => R.msgs.some(m => Date.now() < R.t + m.offset * 1000));
+  setInterval(() => {
+    if (!S.role) return;
+    const n = arrived().length;
+    if (n > (S.known || 0)) { S.known = n; S.fresh = true; S.tab = "msgs"; save(); try { navigator.vibrate && navigator.vibrate(200); } catch (e) {} render(); scrollTo(0, 0); }
+  }, 1000);
+
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  async function decrypt(blob, code) {
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(code), "PBKDF2", false, ["deriveKey"]);
+    const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64(blob.s), iterations: 120000, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(blob.i) }, key, b64(blob.c))));
+  }
+  const clean = v => v.trim().toUpperCase().replace(/\s+/g, "");
+
+  function render() {
+    document.documentElement.style.setProperty("--team", role() ? role().color : "#2563a8");
+    const app = $("#app");
+    if (!S.joined) return eventView(app);
+    if (!S.role) return roleView(app);
+    gameView(app);
+  }
+
+  function eventView(app) {
+    app.innerHTML = `<section class="start">
+      <div class="kick">VOLTAS · OWNERSHIP AND ACCOUNTABILITY</div>
+      <h1>Operation: Family Vacation</h1>
+      <p class="muted">Enter the event code shown on the big screen.</p>
+      <form class="code" id="ef" autocomplete="off"><input id="ei" placeholder="Event code" aria-label="Event code" enterkeyhint="go"><button class="btn">Next</button></form>
+      <p class="msg" id="em"></p></section>`;
+    $("#ef").onsubmit = async e => {
+      e.preventDefault();
+      const m = $("#em"); m.className = "msg"; m.textContent = "Checking…";
+      try { await decrypt(EVENT_BLOB, clean($("#ei").value)); S.joined = true; save(); render(); }
+      catch (err) { m.className = "msg err"; m.textContent = "That code didn't work. Check the big screen."; }
+    };
+  }
+
+  let picking = null;
+  function roleView(app) {
+    if (picking) {
+      const r = ROLES.find(x => x.id === picking);
+      document.documentElement.style.setProperty("--team", r.color);
+      app.innerHTML = `<section class="start">
+        <div class="kick">CHECK YOUR TABLE</div>
+        <h1>You're ${esc(r.dept)}, playing ${esc(r.short)}</h1>
+        <p>Everyone at your table plays the same role. Your role card is private, so keep your screen to your own table.</p>
+        <p class="muted">Once you confirm, you can't switch roles without your facilitator.</p>
+        <button class="btn" id="yes">Yes, I'm at the ${esc(r.dept)} table</button>
+        <button class="link" id="no">Go back</button></section>`;
+      $("#yes").onclick = () => { S.role = picking; picking = null; S.tab = "card"; save(); render(); scrollTo(0, 0); };
+      $("#no").onclick = () => { picking = null; render(); };
+      return;
+    }
+    app.innerHTML = `<section class="start">
+      <div class="kick">VOLTAS · OWNERSHIP AND ACCOUNTABILITY</div>
+      <h1>Which team are you in?</h1>
+      <p class="muted">Pick your department. The sign on your table shows it.</p>
+      <div class="roles">${ROLES.map(r => `<button class="rbtn" style="background:${r.color}" data-r="${r.id}">${esc(r.dept)}<small>plays ${esc(r.short)} · ${esc(r.tag)}</small></button>`).join("")}</div></section>`;
+    app.querySelectorAll(".rbtn").forEach(b => b.onclick = () => { picking = b.dataset.r; render(); });
+  }
+
+  const list = a => `<ul class="b">${a.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
+  const tbl = (head, rows, meRow) => `<div class="scroll"><table>${head ? `<tr>${head.map(h => `<th>${esc(h)}</th>`).join("")}</tr>` : ""}${rows.map(r => `<tr${meRow && meRow(r) ? ' class="me"' : ""}>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</table></div>`;
+
+  function cardView(r) {
+    let h = `<section class="panel">
+      <div class="sec">Your situation</div>${r.story.map(s => `<p>${esc(s)}</p>`).join("")}
+      <div class="sec">The trip</div><p class="muted">${esc(COMMON.trip)}</p>
+      <div class="sec">What you hold</div>${list(r.hold)}`;
+    if (r.know.length) h += `<div class="sec">What you know</div>${list(r.know)}`;
+    if (r.budget) h += `<div class="sec">The family budget</div>${tbl(["Line", "Amount", "Status"], r.budget)}`;
+    if (r.file) h += `<div class="sec">Your booking file</div>${tbl(null, r.file)}`;
+    if (r.prices) h += `<div class="sec">Sundarpur price list</div>${tbl(["Activity", "Price", "Who can go"], r.prices)}`;
+    h += `<div class="sec">Your deadlines</div>${r.deadlines.map(d => `<div class="dead">${esc(d)}</div>`).join("")}
+      <div class="sec">Your rules</div>${list(r.rules)}
+      <div class="sec">Team jobs · agree these while you read</div>${tbl(null, COMMON.jobs)}
+      <div class="sec">You've done well if</div><p class="win">${esc(r.win)}</p>
+      <p class="paper">Money and signed slips are on paper at your table. All payments go through the vendor desk at the front.</p></section>`;
+    return h;
+  }
+  function rulesView(r) {
+    return `<section class="panel"><h3>Who can do what</h3><p class="muted">Every table has this same table. Your row is highlighted.</p>
+      ${tbl(null, COMMON.authority, row => row[0] === r.authKey)}</section>`;
+  }
+  function msgsView(r) {
+    const list = arrived();
+    const open = Object.keys(S.rounds || {}).map(Number).sort();
+    const status = open.length ? `<div class="wait">Round ${open[open.length - 1]} is open.${pending() ? " More messages may arrive for your table during the round. Keep this page open." : ""}</div>` : "";
+    if (!list.length) return open.length ? status : `<div class="wait">No messages yet.<br>When the round starts, type the round code from the big screen above.</div>`;
+    return status + [...list].reverse().map((m, i) => `<article class="mcard${i === 0 && S.fresh ? " new" : ""}"><header><h3>${esc(m.head)}</h3><small>Message ${m.n}</small></header>
+      <div class="body">${m.body.map(b => `<p>${esc(b)}</p>`).join("")}</div></article>`).join("");
+  }
+  function debriefView(r) {
+    const d = S.debrief;
+    return `<section class="panel"><h3>Where this happens at Voltas</h3>
+      <div class="map">${d.map.map(row => `<div class="row${row.id === r.id ? " mine" : ""}" style="--k:${row.color}"><b>${esc(row.team)} · played ${esc(row.family)}</b><span class="muted">${esc(row.voltas)}</span><br><span>${esc(row.moment)}</span></div>`).join("")}</div></section>
+      <section class="panel"><h3>Your commitment</h3><p class="muted">It stays on this phone.</p>
+      ${d.commit.map((c, k) => `<label class="sec" for="n${k}">${esc(c)}</label><textarea id="n${k}" data-k="${k}">${esc((S.notes || [])[k] || "")}</textarea>`).join("")}</section>`;
+  }
+
+  function gameView(app) {
+    const r = role();
+    const tabs = [["card", "My role"], ["msgs", "Messages"], ["rules", "Who can do what"]];
+    if (S.debrief) tabs.push(["debrief", "Debrief"]);
+    const unseen = arrived().length - S.seen;
+    app.innerHTML = `<header class="band"><div><h2>${esc(r.dept)}</h2><small>Playing ${esc(r.short)} · ${esc(r.tag)}</small></div></header>
+      <form class="code" id="cf" autocomplete="off"><input id="ci" placeholder="Code from the big screen" aria-label="Code from the big screen" enterkeyhint="go"><button class="btn">Open</button></form>
+      <p class="msg" id="cm"></p>
+      <nav class="tabs">${tabs.map(([k, l]) => `<button data-t="${k}" aria-pressed="${S.tab === k}">${l}${k === "msgs" && unseen > 0 && S.tab !== "msgs" ? `<span class="dot">${unseen}</span>` : ""}</button>`).join("")}</nav>
+      <div id="view">${S.tab === "card" ? cardView(r) : S.tab === "msgs" ? msgsView(r) : S.tab === "rules" ? rulesView(r) : debriefView(r)}</div>`;
+    if (S.tab === "msgs") { S.seen = arrived().length; save(); setTimeout(() => { S.fresh = false; save(); }, 4000); }
+    app.querySelectorAll(".tabs button").forEach(b => b.onclick = () => { S.tab = b.dataset.t; save(); render(); });
+    document.querySelectorAll("textarea[data-k]").forEach(t => t.oninput = () => { S.notes = S.notes || []; S.notes[+t.dataset.k] = t.value; save(); });
+    $("#cf").onsubmit = async e => {
+      e.preventDefault();
+      const code = clean($("#ci").value), m = $("#cm");
+      if (!code) return;
+      if (code === "RESET") { S = Object.assign(fresh(), { joined: true }); save(); render(); return; }
+      m.className = "msg"; m.textContent = "Opening…";
+      for (const blob of BLOBS) {
+        let c; try { c = await decrypt(blob, code); } catch (err) { continue; }
+        if (c.kind === "debrief") { S.debrief = c; S.tab = "debrief"; save(); render(); scrollTo(0, 0); return; }
+        S.rounds = S.rounds || {};
+        if (!S.rounds[c.n]) S.rounds[c.n] = { t: Date.now(), msgs: c.msgs.filter(x => x.to === S.role) };
+        S.tab = "msgs"; save(); render(); scrollTo(0, 0);
+        const m2 = $("#cm"); m2.className = "msg ok"; m2.textContent = `Round ${c.n} is open on this phone.`; return;
+      }
+      m.className = "msg err"; m.textContent = "That code didn't work. Check the big screen and try again.";
+    };
+  }
+  render();
+})();
+</script>
+</body>
+</html>
