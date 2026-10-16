@@ -52,20 +52,24 @@ p{margin:0 0 12px}
 .thanks{font-weight:800;margin-top:16px}
 .sig{margin-top:18px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:800}
 /* scene animation */
-.wave{animation:wave 4s ease-in-out infinite}
-.wave2{animation:wave 5s ease-in-out infinite reverse}
-@keyframes wave{0%,100%{transform:translateX(0)}50%{transform:translateX(-18px)}}
-.sun{transform-origin:330px 62px;animation:spin 30s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.buddy{transform-origin:178px 205px;animation:chill 3.2s ease-in-out infinite}
-@keyframes chill{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
-.sip{animation:sip 3.2s ease-in-out infinite;transform-origin:250px 182px}
-@keyframes sip{0%,60%,100%{transform:rotate(0)}75%{transform:rotate(-14deg)}}
-.zz{font-family:"Fredoka",sans-serif;font-weight:700;fill:#2b2140;animation:zz 3s ease-in-out infinite}
-.zz:nth-of-type(2){animation-delay:1s}
-@keyframes zz{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:0;transform:translate(14px,-22px)}}
-.bird{animation:fly 9s linear infinite}
-@keyframes fly{0%{transform:translateX(-60px)}100%{transform:translateX(460px)}}
+.num{font-family:"Fredoka",sans-serif;font-weight:700;font-size:13px;fill:#fff}
+.label{font-family:"Fredoka",sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;fill:#2b2140}
+.bye{font-family:"Fredoka",sans-serif;font-weight:700;font-size:14px;fill:#fff}
+.card{animation:slot 4.8s ease-in-out infinite}
+.c1{animation-delay:0s}.c2{animation-delay:.25s}.c3{animation-delay:.5s}
+@keyframes slot{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+.tick{transform-origin:200px 64px;animation:pop 2.4s ease-in-out infinite}
+@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.walker{animation:walk .9s ease-in-out infinite}
+@keyframes walk{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.legL{transform-origin:296px 196px;animation:leg .9s ease-in-out infinite}
+.legR{transform-origin:316px 196px;animation:leg .9s ease-in-out infinite reverse}
+@keyframes leg{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+.arm{transform-origin:340px 140px;animation:waveArm 1s ease-in-out infinite}
+@keyframes waveArm{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(18deg)}}
+.bubble{transform-origin:336px 96px;animation:pop 2s ease-in-out infinite}
+.conf{animation:fall 6s ease-in-out infinite}
+@keyframes fall{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
@@ -73,77 +77,79 @@ p{margin:0 0 12px}
 <div class="float" aria-hidden="true" id="float"></div>
 
 <main class="card">
-  <svg class="scene" viewBox="0 0 400 260" role="img" aria-label="A cheerful puzzle piece in sunglasses lounging on a beach chair, sipping a coconut, next to a 'Nap in progress' sign.">
+  <svg class="scene" viewBox="0 0 400 260" role="img" aria-label="Sentence cards numbered 1, 2 and 3 stacked neatly in order with a green tick, while card number 4 walks off with sunglasses and a little suitcase, waving goodbye.">
     <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb88c"/><stop offset="1" stop-color="#ffe0b0"/></linearGradient>
-      <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#55c3e6"/><stop offset="1" stop-color="#2fa4d0"/></linearGradient>
-      <!-- jigsaw piece: knob on top and right, hole on the left -->
-      <path id="piece" d="M0 14 H33 a11 11 0 1 1 22 0 H88 V41 a11 11 0 1 1 0 22 V96 H0 V63 a11 11 0 1 0 0 -22 Z"/>
+      <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7c7"/><stop offset="1" stop-color="#ffd3dc"/></linearGradient>
     </defs>
-    <rect width="400" height="260" fill="url(#sky)"/>
-    <!-- sun -->
-    <g class="sun">
-      <circle cx="330" cy="62" r="26" fill="#ffd34d"/>
-      <g stroke="#ffd34d" stroke-width="5" stroke-linecap="round">
-        <line x1="330" y1="18" x2="330" y2="28"/><line x1="330" y1="96" x2="330" y2="106"/>
-        <line x1="286" y1="62" x2="296" y2="62"/><line x1="364" y1="62" x2="374" y2="62"/>
-        <line x1="299" y1="31" x2="306" y2="38"/><line x1="354" y1="86" x2="361" y2="93"/>
-        <line x1="361" y1="31" x2="354" y2="38"/><line x1="306" y1="86" x2="299" y2="93"/>
+    <rect width="400" height="260" fill="url(#bg)"/>
+    <!-- confetti -->
+    <g class="conf">
+      <rect x="30" y="30" width="8" height="4" rx="2" fill="#ff7a59" transform="rotate(25 34 32)"/>
+      <rect x="350" y="40" width="8" height="4" rx="2" fill="#3cc9a8" transform="rotate(-20 354 42)"/>
+      <circle cx="210" cy="26" r="3" fill="#7b8cff"/>
+      <circle cx="372" cy="110" r="3" fill="#ffb347"/>
+      <rect x="250" y="34" width="8" height="4" rx="2" fill="#ff5a9e" transform="rotate(40 254 36)"/>
+      <circle cx="20" cy="140" r="3" fill="#3cc9a8"/>
+    </g>
+    <!-- table top -->
+    <rect x="0" y="214" width="400" height="46" fill="#f3b98c"/>
+    <rect x="0" y="210" width="400" height="8" rx="4" fill="#e9a274"/>
+    <!-- the ordered stack: 1, 2, 3 -->
+    <g class="stack">
+      <g class="card c1">
+        <rect x="34" y="70" width="170" height="38" rx="10" fill="#fff" stroke="#2b2140" stroke-width="3"/>
+        <circle cx="54" cy="89" r="11" fill="#ff7a59"/><text x="54" y="94" text-anchor="middle" class="num">1</text>
+        <rect x="74" y="81" width="110" height="6" rx="3" fill="#d8cfe6"/><rect x="74" y="93" width="80" height="6" rx="3" fill="#d8cfe6"/>
       </g>
-    </g>
-    <!-- clouds and a bird -->
-    <g fill="#fff" opacity=".9"><ellipse cx="80" cy="50" rx="30" ry="11"/><ellipse cx="100" cy="43" rx="20" ry="11"/><ellipse cx="200" cy="34" rx="22" ry="8"/></g>
-    <g class="bird"><path d="M20 80 q6 -6 12 0 q6 -6 12 0" stroke="#2b2140" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
-    <!-- sea -->
-    <rect y="120" width="400" height="60" fill="url(#sea)"/>
-    <path class="wave" d="M-20 128 q15 -8 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0" stroke="#bfefff" stroke-width="3" fill="none"/>
-    <path class="wave2" d="M-20 150 q15 -8 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0" stroke="#9fe4f7" stroke-width="3" fill="none"/>
-    <!-- sand -->
-    <path d="M0 172 Q100 158 200 170 T400 166 V260 H0 Z" fill="#ffe1a6"/>
-    <g fill="#f5c97a"><circle cx="40" cy="230" r="2"/><circle cx="120" cy="246" r="2"/><circle cx="300" cy="238" r="2"/><circle cx="360" cy="214" r="2"/><circle cx="210" cy="250" r="2"/></g>
-    <!-- nap sign -->
-    <g transform="translate(300 150) rotate(6)">
-      <rect x="18" y="30" width="6" height="70" rx="3" fill="#a86b3c"/>
-      <rect x="-12" y="0" width="68" height="40" rx="8" fill="#fff" stroke="#2b2140" stroke-width="3"/>
-      <text x="22" y="17" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="10" fill="#2b2140">NAP IN</text>
-      <text x="22" y="31" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="10" fill="#ff5a6e">PROGRESS</text>
-    </g>
-    <!-- deck chair -->
-    <g stroke="#a86b3c" stroke-width="6" stroke-linecap="round">
-      <line x1="120" y1="236" x2="170" y2="180"/><line x1="230" y1="236" x2="196" y2="196"/>
-    </g>
-    <path d="M118 218 L150 168 L240 210 L228 230 Z" fill="#ff5a6e"/>
-    <path d="M134 194 L162 174 M150 200 L178 182 M168 208 L196 192 M186 214 L214 202" stroke="#fff" stroke-width="7" opacity=".9"/>
-    <!-- the puzzle piece, chilling -->
-    <g class="buddy">
-      <use href="#piece" transform="translate(140 132) rotate(-8) scale(.85)" fill="#ff7a59" stroke="#2b2140" stroke-width="3.5" stroke-linejoin="round"/>
-      <!-- sunglasses -->
-      <g transform="translate(150 158) rotate(-8)">
-        <rect x="6" y="6" width="22" height="14" rx="6" fill="#2b2140"/>
-        <rect x="34" y="6" width="22" height="14" rx="6" fill="#2b2140"/>
-        <rect x="26" y="10" width="10" height="3" rx="1.5" fill="#2b2140"/>
-        <rect x="10" y="9" width="7" height="3" rx="1.5" fill="#fff" opacity=".7"/>
-        <rect x="38" y="9" width="7" height="3" rx="1.5" fill="#fff" opacity=".7"/>
-        <!-- smile and cheeks -->
-        <path d="M20 32 q12 10 24 0" stroke="#2b2140" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <circle cx="10" cy="30" r="4" fill="#ff4f6d" opacity=".55"/><circle cx="56" cy="28" r="4" fill="#ff4f6d" opacity=".55"/>
+      <g class="card c2">
+        <rect x="34" y="116" width="170" height="38" rx="10" fill="#fff" stroke="#2b2140" stroke-width="3"/>
+        <circle cx="54" cy="135" r="11" fill="#3cc9a8"/><text x="54" y="140" text-anchor="middle" class="num">2</text>
+        <rect x="74" y="127" width="96" height="6" rx="3" fill="#d8cfe6"/><rect x="74" y="139" width="110" height="6" rx="3" fill="#d8cfe6"/>
       </g>
-      <!-- arm and coconut -->
-      <g class="sip">
-        <path d="M210 196 q20 0 32 -12" stroke="#2b2140" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <circle cx="252" cy="178" r="15" fill="#8b5a2b" stroke="#2b2140" stroke-width="3"/>
-        <ellipse cx="252" cy="166" rx="11" ry="4" fill="#fff6e0" stroke="#2b2140" stroke-width="2.5"/>
-        <path d="M254 166 L246 138" stroke="#ff5a9e" stroke-width="3.5" stroke-linecap="round"/>
-        <!-- tiny umbrella -->
-        <path d="M262 150 l2 -16" stroke="#2b2140" stroke-width="2"/>
-        <path d="M252 136 q12 -14 24 0 z" fill="#3cc9a8" stroke="#2b2140" stroke-width="2"/>
+      <g class="card c3">
+        <rect x="34" y="162" width="170" height="38" rx="10" fill="#fff" stroke="#2b2140" stroke-width="3"/>
+        <circle cx="54" cy="181" r="11" fill="#7b8cff"/><text x="54" y="186" text-anchor="middle" class="num">3</text>
+        <rect x="74" y="173" width="104" height="6" rx="3" fill="#d8cfe6"/><rect x="74" y="185" width="70" height="6" rx="3" fill="#d8cfe6"/>
       </g>
+      <!-- big tick -->
+      <g class="tick">
+        <circle cx="200" cy="64" r="20" fill="#2fbf71" stroke="#2b2140" stroke-width="3"/>
+        <path d="M190 64 l7 7 l13 -14" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="118" y="46" text-anchor="middle" class="label">ALL IN ORDER</text>
     </g>
-    <text class="zz" x="196" y="128" font-size="16">z</text>
-    <text class="zz" x="208" y="114" font-size="12">z</text>
-    <!-- a second piece in the sand, also off duty -->
-    <use href="#piece" transform="translate(40 196) rotate(18) scale(.32)" fill="#3cc9a8" stroke="#2b2140" stroke-width="7"/>
-    <use href="#piece" transform="translate(76 214) rotate(-24) scale(.26)" fill="#ffb347" stroke="#2b2140" stroke-width="8"/>
+    <!-- dotted trail -->
+    <path d="M212 196 q30 -6 52 0" stroke="#2b2140" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round" fill="none" opacity=".5"/>
+    <!-- card 4, off on holiday -->
+    <g class="walker">
+      <!-- legs -->
+      <g stroke="#2b2140" stroke-width="4" stroke-linecap="round">
+        <line class="legL" x1="296" y1="196" x2="290" y2="212"/>
+        <line class="legR" x1="316" y1="196" x2="322" y2="212"/>
+      </g>
+      <rect x="272" y="104" width="68" height="94" rx="12" fill="#fff" stroke="#2b2140" stroke-width="3"/>
+      <circle cx="290" cy="122" r="11" fill="#ffb347"/><text x="290" y="127" text-anchor="middle" class="num">4</text>
+      <!-- sunglasses and smile -->
+      <rect x="282" y="142" width="20" height="12" rx="5" fill="#2b2140"/><rect x="308" y="142" width="20" height="12" rx="5" fill="#2b2140"/>
+      <rect x="300" y="146" width="10" height="3" rx="1.5" fill="#2b2140"/>
+      <rect x="285" y="144" width="6" height="3" rx="1.5" fill="#fff" opacity=".7"/><rect x="311" y="144" width="6" height="3" rx="1.5" fill="#fff" opacity=".7"/>
+      <path d="M296 166 q9 8 18 0" stroke="#2b2140" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="284" cy="164" r="4" fill="#ff4f6d" opacity=".5"/><circle cx="326" cy="164" r="4" fill="#ff4f6d" opacity=".5"/>
+      <rect x="290" y="176" width="40" height="5" rx="2.5" fill="#d8cfe6"/>
+      <!-- waving arm -->
+      <g class="arm"><path d="M340 140 q16 -10 18 -30" stroke="#2b2140" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="358" cy="108" r="5" fill="#fff" stroke="#2b2140" stroke-width="3"/></g>
+      <!-- other arm and suitcase -->
+      <path d="M272 160 q-12 8 -14 22" stroke="#2b2140" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <rect x="240" y="186" width="34" height="24" rx="5" fill="#ff5a6e" stroke="#2b2140" stroke-width="3"/>
+      <path d="M250 186 v-5 h14 v5" stroke="#2b2140" stroke-width="3" fill="none"/>
+      <circle cx="263" cy="198" r="4" fill="#ffd34d"/>
+    </g>
+    <!-- speech bubble -->
+    <g class="bubble">
+      <rect x="318" y="58" width="66" height="30" rx="14" fill="#2b2140"/>
+      <path d="M336 86 l-6 12 l14 -10 z" fill="#2b2140"/>
+      <text x="351" y="78" text-anchor="middle" class="bye">Bye!</text>
+    </g>
   </svg>
 
   <div class="body">
@@ -167,7 +173,7 @@ p{margin:0 0 12px}
   const cols = ["#ff7a59", "#3cc9a8", "#ffb347", "#7b8cff", "#ff5a9e"];
   for (let i = 0; i < 14; i++) {
     const s = 22 + Math.random() * 34, c = cols[i % cols.length];
-    box.insertAdjacentHTML("beforeend", `<svg width="${s}" height="${s}" viewBox="-14 -14 116 124" style="left:${Math.random() * 100}vw;top:${Math.random() * 90}vh;animation-duration:${14 + Math.random() * 16}s;animation-delay:-${Math.random() * 20}s"><path d="M0 14 H33 a11 11 0 1 1 22 0 H88 V41 a11 11 0 1 1 0 22 V96 H0 V63 a11 11 0 1 0 0 -22 Z" fill="${c}"/></svg>`);
+    box.insertAdjacentHTML("beforeend", `<svg width="${s * 1.8}" height="${s * .6}" viewBox="0 0 90 30" style="left:${Math.random() * 100}vw;top:${Math.random() * 90}vh;animation-duration:${14 + Math.random() * 16}s;animation-delay:-${Math.random() * 20}s"><rect x="1" y="1" width="88" height="28" rx="8" fill="#fff"/><circle cx="15" cy="15" r="9" fill="${c}"/><text x="15" y="19" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="12" fill="#fff">${i % 5 + 1}</text><rect x="30" y="9" width="48" height="4" rx="2" fill="${c}" opacity=".45"/><rect x="30" y="17" width="34" height="4" rx="2" fill="${c}" opacity=".45"/></svg>`);
   }
 })();
 </script>
