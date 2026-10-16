@@ -7,32 +7,169 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap">
 <style>
-:root{--bg:#0c131b;--panel:#141e29;--ink:#e8eef4;--muted:#93a4b5;--amber:#f2a93b;color-scheme:dark}
+:root{
+  --ink:#2b2140; --soft:#6b5f80; --piece:#ff7a59; --piece2:#ffb347; --mint:#3cc9a8; --sea:#55c3e6; --sea2:#2fa4d0; --sand:#ffe1a6;
+  --card:#fffaf3; color-scheme:light;
+}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg)}
-body{color:var(--ink);font-family:"Barlow","Segoe UI",Roboto,Arial,sans-serif;font-size:18px;line-height:1.55;display:grid;place-items:center;min-height:100vh;padding:24px 16px}
-.card{max-width:560px;width:100%;background:var(--panel);border:1px solid #2a3a4b;border-radius:22px;padding:36px 28px;text-align:center}
-.pieces{font-size:56px;line-height:1;margin-bottom:10px;display:inline-block;animation:wiggle 2.4s ease-in-out infinite}
-@keyframes wiggle{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
-@media (prefers-reduced-motion:reduce){.pieces{animation:none}}
-h1{font-family:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;font-weight:800;font-size:40px;line-height:1.05;margin:6px 0 18px}
-p{margin:0 0 14px}
-.muted{color:var(--muted)}
-.big{font-family:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;font-weight:800;font-size:30px;color:var(--amber);margin:22px 0 6px}
-.sig{font-size:14px;color:var(--muted);margin-top:22px}
+html,body{margin:0;min-height:100%}
+body{
+  font-family:"Nunito","Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);font-size:18px;line-height:1.55;
+  background:linear-gradient(180deg,#ffd9a8 0%,#ffc0c8 45%,#e9b6f0 100%);
+  min-height:100vh;display:grid;place-items:center;padding:28px 16px;overflow-x:hidden;position:relative;
+}
+/* drifting puzzle pieces in the background */
+.float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.float svg{position:absolute;opacity:.55;animation:drift linear infinite}
+@keyframes drift{0%{transform:translateY(60vh) rotate(0)}100%{transform:translateY(-110vh) rotate(360deg)}}
+
+.card{
+  position:relative;z-index:1;width:100%;max-width:600px;background:var(--card);border-radius:30px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(90,40,90,.25),0 0 0 6px rgba(255,255,255,.55);
+}
+.scene{display:block;width:100%;height:auto;background:#ffd6a0}
+.body{padding:26px 28px 30px;text-align:center}
+.tag{display:inline-flex;align-items:center;gap:8px;background:#2b2140;color:#fff;font-family:"Fredoka",sans-serif;font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;padding:6px 14px;margin-bottom:14px}
+.tag i{width:8px;height:8px;border-radius:50%;background:#ff5a6e;box-shadow:0 0 0 0 rgba(255,90,110,.7);animation:ping 1.6s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(255,90,110,0)}100%{box-shadow:0 0 0 0 rgba(255,90,110,0)}}
+h1{font-family:"Fredoka","Nunito",sans-serif;font-weight:700;font-size:clamp(32px,7vw,44px);line-height:1.05;margin:0 0 14px}
+h1 .w{display:inline-block;animation:bob 2.2s ease-in-out infinite}
+h1 .w:nth-child(2){animation-delay:.15s}h1 .w:nth-child(3){animation-delay:.3s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+p{margin:0 0 12px}
+.lead{font-weight:700;font-size:19px}
+.soft{color:var(--soft)}
+.times{
+  margin:22px auto 8px;display:inline-flex;align-items:center;gap:12px;
+  background:linear-gradient(90deg,var(--piece),var(--piece2));color:#fff;border-radius:18px;padding:12px 22px;
+  font-family:"Fredoka",sans-serif;font-weight:700;font-size:clamp(22px,6vw,34px);white-space:nowrap;transform:rotate(-2deg);
+  box-shadow:0 8px 0 #c9502f;
+}
+.times svg{width:36px;height:36px;flex:none;animation:tick 1s steps(2) infinite}
+@keyframes tick{50%{transform:rotate(12deg)}}
+.thanks{font-weight:800;margin-top:16px}
+.sig{margin-top:18px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:800}
+/* scene animation */
+.wave{animation:wave 4s ease-in-out infinite}
+.wave2{animation:wave 5s ease-in-out infinite reverse}
+@keyframes wave{0%,100%{transform:translateX(0)}50%{transform:translateX(-18px)}}
+.sun{transform-origin:330px 62px;animation:spin 30s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.buddy{transform-origin:178px 205px;animation:chill 3.2s ease-in-out infinite}
+@keyframes chill{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.sip{animation:sip 3.2s ease-in-out infinite;transform-origin:250px 182px}
+@keyframes sip{0%,60%,100%{transform:rotate(0)}75%{transform:rotate(-14deg)}}
+.zz{font-family:"Fredoka",sans-serif;font-weight:700;fill:#2b2140;animation:zz 3s ease-in-out infinite}
+.zz:nth-of-type(2){animation-delay:1s}
+@keyframes zz{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:0;transform:translate(14px,-22px)}}
+.bird{animation:fly 9s linear infinite}
+@keyframes fly{0%{transform:translateX(-60px)}100%{transform:translateX(460px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
+<div class="float" aria-hidden="true" id="float"></div>
+
 <main class="card">
-  <div class="pieces" aria-hidden="true">🧩</div>
-  <h1>Well, well, well. Look who's back.</h1>
-  <p>We're flattered. Truly. You enjoyed this activity so much that you came back for another go.</p>
-  <p class="muted">Bad news, though. Every sentence has found its place, the story has packed its bags, and right now it's on a beach somewhere, sipping a coconut and refusing to answer emails.</p>
-  <p class="big">Time's up, buddy.</p>
-  <p>Thanks for playing. You were brilliant.</p>
-  <p class="sig">Nyra Leadership Consulting</p>
+  <svg class="scene" viewBox="0 0 400 260" role="img" aria-label="A cheerful puzzle piece in sunglasses lounging on a beach chair, sipping a coconut, next to an 'Out of office' sign.">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb88c"/><stop offset="1" stop-color="#ffe0b0"/></linearGradient>
+      <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#55c3e6"/><stop offset="1" stop-color="#2fa4d0"/></linearGradient>
+      <!-- jigsaw piece: knob on top and right, hole on the left -->
+      <path id="piece" d="M0 14 H33 a11 11 0 1 1 22 0 H88 V41 a11 11 0 1 1 0 22 V96 H0 V63 a11 11 0 1 0 0 -22 Z"/>
+    </defs>
+    <rect width="400" height="260" fill="url(#sky)"/>
+    <!-- sun -->
+    <g class="sun">
+      <circle cx="330" cy="62" r="26" fill="#ffd34d"/>
+      <g stroke="#ffd34d" stroke-width="5" stroke-linecap="round">
+        <line x1="330" y1="18" x2="330" y2="28"/><line x1="330" y1="96" x2="330" y2="106"/>
+        <line x1="286" y1="62" x2="296" y2="62"/><line x1="364" y1="62" x2="374" y2="62"/>
+        <line x1="299" y1="31" x2="306" y2="38"/><line x1="354" y1="86" x2="361" y2="93"/>
+        <line x1="361" y1="31" x2="354" y2="38"/><line x1="306" y1="86" x2="299" y2="93"/>
+      </g>
+    </g>
+    <!-- clouds and a bird -->
+    <g fill="#fff" opacity=".9"><ellipse cx="80" cy="50" rx="30" ry="11"/><ellipse cx="100" cy="43" rx="20" ry="11"/><ellipse cx="200" cy="34" rx="22" ry="8"/></g>
+    <g class="bird"><path d="M20 80 q6 -6 12 0 q6 -6 12 0" stroke="#2b2140" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
+    <!-- sea -->
+    <rect y="120" width="400" height="60" fill="url(#sea)"/>
+    <path class="wave" d="M-20 128 q15 -8 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0" stroke="#bfefff" stroke-width="3" fill="none"/>
+    <path class="wave2" d="M-20 150 q15 -8 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0" stroke="#9fe4f7" stroke-width="3" fill="none"/>
+    <!-- sand -->
+    <path d="M0 172 Q100 158 200 170 T400 166 V260 H0 Z" fill="#ffe1a6"/>
+    <g fill="#f5c97a"><circle cx="40" cy="230" r="2"/><circle cx="120" cy="246" r="2"/><circle cx="300" cy="238" r="2"/><circle cx="360" cy="214" r="2"/><circle cx="210" cy="250" r="2"/></g>
+    <!-- out of office sign -->
+    <g transform="translate(300 150) rotate(6)">
+      <rect x="18" y="30" width="6" height="70" rx="3" fill="#a86b3c"/>
+      <rect x="-6" y="0" width="56" height="40" rx="8" fill="#fff" stroke="#2b2140" stroke-width="3"/>
+      <text x="22" y="17" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="10" fill="#2b2140">OUT OF</text>
+      <text x="22" y="31" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="10" fill="#ff5a6e">OFFICE</text>
+    </g>
+    <!-- deck chair -->
+    <g stroke="#a86b3c" stroke-width="6" stroke-linecap="round">
+      <line x1="120" y1="236" x2="170" y2="180"/><line x1="230" y1="236" x2="196" y2="196"/>
+    </g>
+    <path d="M118 218 L150 168 L240 210 L228 230 Z" fill="#ff5a6e"/>
+    <path d="M134 194 L162 174 M150 200 L178 182 M168 208 L196 192 M186 214 L214 202" stroke="#fff" stroke-width="7" opacity=".9"/>
+    <!-- the puzzle piece, chilling -->
+    <g class="buddy">
+      <use href="#piece" transform="translate(140 132) rotate(-8) scale(.85)" fill="#ff7a59" stroke="#2b2140" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- sunglasses -->
+      <g transform="translate(150 158) rotate(-8)">
+        <rect x="6" y="6" width="22" height="14" rx="6" fill="#2b2140"/>
+        <rect x="34" y="6" width="22" height="14" rx="6" fill="#2b2140"/>
+        <rect x="26" y="10" width="10" height="3" rx="1.5" fill="#2b2140"/>
+        <rect x="10" y="9" width="7" height="3" rx="1.5" fill="#fff" opacity=".7"/>
+        <rect x="38" y="9" width="7" height="3" rx="1.5" fill="#fff" opacity=".7"/>
+        <!-- smile and cheeks -->
+        <path d="M20 32 q12 10 24 0" stroke="#2b2140" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="10" cy="30" r="4" fill="#ff4f6d" opacity=".55"/><circle cx="56" cy="28" r="4" fill="#ff4f6d" opacity=".55"/>
+      </g>
+      <!-- arm and coconut -->
+      <g class="sip">
+        <path d="M210 196 q20 0 32 -12" stroke="#2b2140" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="252" cy="178" r="15" fill="#8b5a2b" stroke="#2b2140" stroke-width="3"/>
+        <ellipse cx="252" cy="166" rx="11" ry="4" fill="#fff6e0" stroke="#2b2140" stroke-width="2.5"/>
+        <path d="M254 166 L246 138" stroke="#ff5a9e" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- tiny umbrella -->
+        <path d="M262 150 l2 -16" stroke="#2b2140" stroke-width="2"/>
+        <path d="M252 136 q12 -14 24 0 z" fill="#3cc9a8" stroke="#2b2140" stroke-width="2"/>
+      </g>
+    </g>
+    <text class="zz" x="196" y="128" font-size="16">z</text>
+    <text class="zz" x="208" y="114" font-size="12">z</text>
+    <!-- a second piece in the sand, also off duty -->
+    <use href="#piece" transform="translate(40 196) rotate(18) scale(.32)" fill="#3cc9a8" stroke="#2b2140" stroke-width="7"/>
+    <use href="#piece" transform="translate(76 214) rotate(-24) scale(.26)" fill="#ffb347" stroke="#2b2140" stroke-width="8"/>
+  </svg>
+
+  <div class="body">
+    <span class="tag"><i></i>Activity closed</span>
+    <h1><span class="w">Well,</span> <span class="w">well,</span> <span class="w">well.</span><br>Look who's back.</h1>
+    <p class="lead">We're flattered. Truly. You enjoyed this activity so much that you came back for another go.</p>
+    <p class="soft">Bad news, though. Every sentence has found its place, the story has packed its bags, and right now it's on a beach somewhere, sipping a coconut and refusing to answer emails.</p>
+    <div class="times">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="22" r="14" fill="#fff"/><rect x="16" y="2" width="8" height="5" rx="2" fill="#fff"/><path d="M20 22 V13" stroke="#ff7a59" stroke-width="3.5" stroke-linecap="round"/><path d="M20 22 L26 25" stroke="#2b2140" stroke-width="3" stroke-linecap="round"/></svg>
+      Time's up, buddy.
+    </div>
+    <p class="thanks">Thanks for playing. You were brilliant.</p>
+    <p class="sig">Nyra Leadership Consulting</p>
+  </div>
 </main>
+
+<script>
+// a few puzzle pieces drift up the background
+(() => {
+  const box = document.getElementById("float");
+  const cols = ["#ff7a59", "#3cc9a8", "#ffb347", "#7b8cff", "#ff5a9e"];
+  for (let i = 0; i < 14; i++) {
+    const s = 22 + Math.random() * 34, c = cols[i % cols.length];
+    box.insertAdjacentHTML("beforeend", `<svg width="${s}" height="${s}" viewBox="-14 -14 116 124" style="left:${Math.random() * 100}vw;top:${Math.random() * 90}vh;animation-duration:${14 + Math.random() * 16}s;animation-delay:-${Math.random() * 20}s"><path d="M0 14 H33 a11 11 0 1 1 22 0 H88 V41 a11 11 0 1 1 0 22 V96 H0 V63 a11 11 0 1 0 0 -22 Z" fill="${c}"/></svg>`);
+  }
+})();
+</script>
 </body>
 </html>
