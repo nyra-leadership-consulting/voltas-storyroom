@@ -3,32 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Voltas Story Room</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700;800&family=Barlow:wght@400;600&display=swap">
+<title>The Voltas Story Room · Closed</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap">
 <style>
-:root{--bg:#eef1f4;--surface:#fff;--ink:#14212d;--muted:#5b6b7a;--line:#d5dce3;--accent:#0d5c8f}
-@media (prefers-color-scheme:dark){:root{--bg:#0f161d;--surface:#17212b;--ink:#e6edf3;--muted:#9aabba;--line:#2c3a47;--accent:#5aa9df;color-scheme:dark}}
+:root{--bg:#0c131b;--panel:#141e29;--ink:#e8eef4;--muted:#93a4b5;--amber:#f2a93b;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Barlow,"Segoe UI",Arial,sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px 16px}
-main{max-width:640px;width:100%;display:grid;gap:18px}
-h1{font-family:"Barlow Semi Condensed","Arial Narrow",sans-serif;font-weight:800;font-size:34px;margin:0}
-p{margin:0;color:var(--muted)}
-.links{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:520px){.links{grid-template-columns:1fr}}
-a{display:grid;gap:4px;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:18px;color:var(--ink);text-decoration:none}
-a:hover,a:focus-visible{border-color:var(--accent)}
-a strong{font-family:"Barlow Semi Condensed","Arial Narrow",sans-serif;font-size:22px}
-a span{color:var(--muted);font-size:14px}
+html,body{margin:0;min-height:100%;background:var(--bg)}
+body{color:var(--ink);font-family:"Barlow","Segoe UI",Roboto,Arial,sans-serif;font-size:18px;line-height:1.55;display:grid;place-items:center;min-height:100vh;padding:24px 16px}
+.card{max-width:560px;width:100%;background:var(--panel);border:1px solid #2a3a4b;border-radius:22px;padding:36px 28px;text-align:center}
+.pieces{font-size:56px;line-height:1;margin-bottom:10px;display:inline-block;animation:wiggle 2.4s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){.pieces{animation:none}}
+h1{font-family:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;font-weight:800;font-size:40px;line-height:1.05;margin:6px 0 18px}
+p{margin:0 0 14px}
+.muted{color:var(--muted)}
+.big{font-family:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;font-weight:800;font-size:30px;color:var(--amber);margin:22px 0 6px}
+.sig{font-size:14px;color:var(--muted);margin-top:22px}
 </style>
 </head>
 <body>
-<main>
-<h1>The Voltas Story Room</h1>
-<p>Session 2 · Structured communication. Choose the version for your group.</p>
-<div class="links">
-<a href="ic.html"><strong>Individual contributors</strong><span>The Payroll File That Wouldn't Reconcile and The Quote That Wasn't the Whole Job</span></a>
-<a href="managers.html"><strong>Managers</strong><span>The Deal That Looked Too Good and The Rain Delay</span></a>
-</div>
+<main class="card">
+  <div class="pieces" aria-hidden="true">🧩</div>
+  <h1>Well, well, well. Look who's back.</h1>
+  <p>We're flattered. Truly. You enjoyed this activity so much that you came back for another go.</p>
+  <p class="muted">Bad news, though. Every sentence has found its place, the story has packed its bags, and right now it's on a beach somewhere, sipping a coconut and refusing to answer emails.</p>
+  <p class="big">Time's up, buddy.</p>
+  <p>Thanks for playing. You were brilliant.</p>
+  <p class="sig">Nyra Leadership Consulting</p>
 </main>
 </body>
 </html>
