@@ -3,179 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Voltas Story Room · Closed</title>
-<meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap">
+<title>The Voltas Story Room</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700;800&family=Barlow:wght@400;600&display=swap">
 <style>
-:root{
-  --ink:#2b2140; --soft:#6b5f80; --piece:#ff7a59; --piece2:#ffb347; --mint:#3cc9a8; --sea:#55c3e6; --sea2:#2fa4d0; --sand:#ffe1a6;
-  --card:#fffaf3; color-scheme:light;
-}
+:root{--bg:#eef1f4;--surface:#fff;--ink:#14212d;--muted:#5b6b7a;--line:#d5dce3;--accent:#0d5c8f}
+@media (prefers-color-scheme:dark){:root{--bg:#0f161d;--surface:#17212b;--ink:#e6edf3;--muted:#9aabba;--line:#2c3a47;--accent:#5aa9df;color-scheme:dark}}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%}
-body{
-  font-family:"Nunito","Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);font-size:18px;line-height:1.55;
-  background:linear-gradient(180deg,#ffd9a8 0%,#ffc0c8 45%,#e9b6f0 100%);
-  min-height:100vh;display:grid;place-items:center;padding:28px 16px;overflow-x:hidden;position:relative;
-}
-/* drifting puzzle pieces in the background */
-.float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.float svg{position:absolute;opacity:.55;animation:drift linear infinite}
-@keyframes drift{0%{transform:translateY(60vh) rotate(0)}100%{transform:translateY(-110vh) rotate(360deg)}}
-
-.card{
-  position:relative;z-index:1;width:100%;max-width:600px;background:var(--card);border-radius:30px;overflow:hidden;
-  box-shadow:0 24px 60px rgba(90,40,90,.25),0 0 0 6px rgba(255,255,255,.55);
-}
-.scene{display:block;width:100%;height:auto;background:#ffd6a0}
-.body{padding:26px 28px 30px;text-align:center}
-.tag{display:inline-flex;align-items:center;gap:8px;background:#2b2140;color:#fff;font-family:"Fredoka",sans-serif;font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;padding:6px 14px;margin-bottom:14px}
-.tag i{width:8px;height:8px;border-radius:50%;background:#ff5a6e;box-shadow:0 0 0 0 rgba(255,90,110,.7);animation:ping 1.6s infinite}
-@keyframes ping{70%{box-shadow:0 0 0 10px rgba(255,90,110,0)}100%{box-shadow:0 0 0 0 rgba(255,90,110,0)}}
-h1{font-family:"Fredoka","Nunito",sans-serif;font-weight:700;font-size:clamp(32px,7vw,44px);line-height:1.05;margin:0 0 14px}
-h1 .w{display:inline-block;animation:bob 2.2s ease-in-out infinite}
-h1 .w:nth-child(2){animation-delay:.15s}h1 .w:nth-child(3){animation-delay:.3s}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-p{margin:0 0 12px}
-.lead{font-weight:700;font-size:19px}
-.soft{color:var(--soft)}
-.times{
-  margin:22px auto 8px;display:inline-flex;align-items:center;gap:12px;
-  background:linear-gradient(90deg,var(--piece),var(--piece2));color:#fff;border-radius:18px;padding:12px 22px;
-  font-family:"Fredoka",sans-serif;font-weight:700;font-size:clamp(22px,6vw,34px);white-space:nowrap;transform:rotate(-2deg);
-  box-shadow:0 8px 0 #c9502f;
-}
-.times svg{width:36px;height:36px;flex:none;animation:tick 1s steps(2) infinite}
-@keyframes tick{50%{transform:rotate(12deg)}}
-.thanks{font-weight:800;margin-top:16px}
-.sig{margin-top:18px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:800}
-/* scene animation */
-.num{font-family:"Fredoka",sans-serif;font-weight:700;font-size:13px;fill:#fff}
-.label{font-family:"Fredoka",sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;fill:#2b2140}
-.bye{font-family:"Fredoka",sans-serif;font-weight:700;font-size:14px;fill:#fff}
-.card{animation:slot 4.8s ease-in-out infinite}
-.c1{animation-delay:0s}.c2{animation-delay:.25s}.c3{animation-delay:.5s}
-@keyframes slot{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
-.tick{transform-origin:200px 64px;animation:pop 2.4s ease-in-out infinite}
-@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
-.walker{animation:walk .9s ease-in-out infinite}
-@keyframes walk{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-.legL{transform-origin:296px 196px;animation:leg .9s ease-in-out infinite}
-.legR{transform-origin:316px 196px;animation:leg .9s ease-in-out infinite reverse}
-@keyframes leg{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
-.arm{transform-origin:340px 140px;animation:waveArm 1s ease-in-out infinite}
-@keyframes waveArm{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(18deg)}}
-.bubble{transform-origin:336px 96px;animation:pop 2s ease-in-out infinite}
-.conf{animation:fall 6s ease-in-out infinite}
-@keyframes fall{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Barlow,"Segoe UI",Arial,sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px 16px}
+main{max-width:640px;width:100%;display:grid;gap:18px}
+h1{font-family:"Barlow Semi Condensed","Arial Narrow",sans-serif;font-weight:800;font-size:34px;margin:0}
+p{margin:0;color:var(--muted)}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.links{grid-template-columns:1fr}}
+a{display:grid;gap:4px;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:18px;color:var(--ink);text-decoration:none}
+a:hover,a:focus-visible{border-color:var(--accent)}
+a strong{font-family:"Barlow Semi Condensed","Arial Narrow",sans-serif;font-size:22px}
+a span{color:var(--muted);font-size:14px}
 </style>
 </head>
 <body>
-<div class="float" aria-hidden="true" id="float"></div>
-
-<main class="card">
-  <svg class="scene" viewBox="0 0 400 260" role="img" aria-label="Sentence cards numbered 1, 2 and 3 stacked neatly in order with a green tick, while card number 4 walks off with sunglasses and a little suitcase, waving goodbye.">
-    <defs>
-      <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7c7"/><stop offset="1" stop-color="#ffd3dc"/></linearGradient>
-    </defs>
-    <rect width="400" height="260" fill="url(#bg)"/>
-    <!-- confetti -->
-    <g class="conf">
-      <rect x="30" y="30" width="8" height="4" rx="2" fill="#ff7a59" transform="rotate(25 34 32)"/>
-      <rect x="350" y="40" width="8" height="4" rx="2" fill="#3cc9a8" transform="rotate(-20 354 42)"/>
-      <circle cx="210" cy="26" r="3" fill="#7b8cff"/>
-      <circle cx="372" cy="110" r="3" fill="#ffb347"/>
-      <rect x="250" y="34" width="8" height="4" rx="2" fill="#ff5a9e" transform="rotate(40 254 36)"/>
-      <circle cx="20" cy="140" r="3" fill="#3cc9a8"/>
-    </g>
-    <!-- table top -->
-    <rect x="0" y="214" width="400" height="46" fill="#f3b98c"/>
-    <rect x="0" y="210" width="400" height="8" rx="4" fill="#e9a274"/>
-    <!-- the ordered stack: 1, 2, 3 -->
-    <g class="stack">
-      <g class="card c1">
-        <rect x="34" y="70" width="170" height="38" rx="10" fill="#fff" stroke="#2b2140" stroke-width="3"/>
-        <circle cx="54" cy="89" r="11" fill="#ff7a59"/><text x="54" y="94" text-anchor="middle" class="num">1</text>
-        <rect x="74" y="81" width="110" height="6" rx="3" fill="#d8cfe6"/><rect x="74" y="93" width="80" height="6" rx="3" fill="#d8cfe6"/>
-      </g>
-      <g class="card c2">
-        <rect x="34" y="116" width="170" height="38" rx="10" fill="#fff" stroke="#2b2140" stroke-width="3"/>
-        <circle cx="54" cy="135" r="11" fill="#3cc9a8"/><text x="54" y="140" text-anchor="middle" class="num">2</text>
-        <rect x="74" y="127" width="96" height="6" rx="3" fill="#d8cfe6"/><rect x="74" y="139" width="110" height="6" rx="3" fill="#d8cfe6"/>
-      </g>
-      <g class="card c3">
-        <rect x="34" y="162" width="170" height="38" rx="10" fill="#fff" stroke="#2b2140" stroke-width="3"/>
-        <circle cx="54" cy="181" r="11" fill="#7b8cff"/><text x="54" y="186" text-anchor="middle" class="num">3</text>
-        <rect x="74" y="173" width="104" height="6" rx="3" fill="#d8cfe6"/><rect x="74" y="185" width="70" height="6" rx="3" fill="#d8cfe6"/>
-      </g>
-      <!-- big tick -->
-      <g class="tick">
-        <circle cx="200" cy="64" r="20" fill="#2fbf71" stroke="#2b2140" stroke-width="3"/>
-        <path d="M190 64 l7 7 l13 -14" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      </g>
-      <text x="118" y="46" text-anchor="middle" class="label">ALL IN ORDER</text>
-    </g>
-    <!-- dotted trail -->
-    <path d="M212 196 q30 -6 52 0" stroke="#2b2140" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round" fill="none" opacity=".5"/>
-    <!-- card 4, off on holiday -->
-    <g class="walker">
-      <!-- legs -->
-      <g stroke="#2b2140" stroke-width="4" stroke-linecap="round">
-        <line class="legL" x1="296" y1="196" x2="290" y2="212"/>
-        <line class="legR" x1="316" y1="196" x2="322" y2="212"/>
-      </g>
-      <rect x="272" y="104" width="68" height="94" rx="12" fill="#fff" stroke="#2b2140" stroke-width="3"/>
-      <circle cx="290" cy="122" r="11" fill="#ffb347"/><text x="290" y="127" text-anchor="middle" class="num">4</text>
-      <!-- sunglasses and smile -->
-      <rect x="282" y="142" width="20" height="12" rx="5" fill="#2b2140"/><rect x="308" y="142" width="20" height="12" rx="5" fill="#2b2140"/>
-      <rect x="300" y="146" width="10" height="3" rx="1.5" fill="#2b2140"/>
-      <rect x="285" y="144" width="6" height="3" rx="1.5" fill="#fff" opacity=".7"/><rect x="311" y="144" width="6" height="3" rx="1.5" fill="#fff" opacity=".7"/>
-      <path d="M296 166 q9 8 18 0" stroke="#2b2140" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <circle cx="284" cy="164" r="4" fill="#ff4f6d" opacity=".5"/><circle cx="326" cy="164" r="4" fill="#ff4f6d" opacity=".5"/>
-      <rect x="290" y="176" width="40" height="5" rx="2.5" fill="#d8cfe6"/>
-      <!-- waving arm -->
-      <g class="arm"><path d="M340 140 q16 -10 18 -30" stroke="#2b2140" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="358" cy="108" r="5" fill="#fff" stroke="#2b2140" stroke-width="3"/></g>
-      <!-- other arm and suitcase -->
-      <path d="M272 160 q-12 8 -14 22" stroke="#2b2140" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <rect x="240" y="186" width="34" height="24" rx="5" fill="#ff5a6e" stroke="#2b2140" stroke-width="3"/>
-      <path d="M250 186 v-5 h14 v5" stroke="#2b2140" stroke-width="3" fill="none"/>
-      <circle cx="263" cy="198" r="4" fill="#ffd34d"/>
-    </g>
-    <!-- speech bubble -->
-    <g class="bubble">
-      <rect x="318" y="58" width="66" height="30" rx="14" fill="#2b2140"/>
-      <path d="M336 86 l-6 12 l14 -10 z" fill="#2b2140"/>
-      <text x="351" y="78" text-anchor="middle" class="bye">Bye!</text>
-    </g>
-  </svg>
-
-  <div class="body">
-    <span class="tag"><i></i>Activity closed</span>
-    <h1><span class="w">Well,</span> <span class="w">well,</span> <span class="w">well.</span><br>Look who's back.</h1>
-    <p class="lead">We're flattered. Truly. You enjoyed this activity so much that you came back for another go.</p>
-    <p class="soft">Bad news, though. Every sentence has found its place, the story has packed its bags, and right now it's on a beach somewhere, sipping a coconut and refusing to answer emails.</p>
-    <div class="times">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="22" r="14" fill="#fff"/><rect x="16" y="2" width="8" height="5" rx="2" fill="#fff"/><path d="M20 22 V13" stroke="#ff7a59" stroke-width="3.5" stroke-linecap="round"/><path d="M20 22 L26 25" stroke="#2b2140" stroke-width="3" stroke-linecap="round"/></svg>
-      Time's up, buddy.
-    </div>
-    <p class="thanks">Thanks for playing. You were brilliant.</p>
-    <p class="sig">Nyra Leadership Consulting</p>
-  </div>
+<main>
+<h1>The Voltas Story Room</h1>
+<p>Session 2 · Structured communication. Choose the version for your group.</p>
+<div class="links">
+<a href="ic.html"><strong>Individual contributors</strong><span>The Payroll File That Wouldn't Reconcile and The Quote That Wasn't the Whole Job</span></a>
+<a href="managers.html"><strong>Managers</strong><span>The Deal That Looked Too Good and The Rain Delay</span></a>
+</div>
 </main>
-
-<script>
-// a few puzzle pieces drift up the background
-(() => {
-  const box = document.getElementById("float");
-  const cols = ["#ff7a59", "#3cc9a8", "#ffb347", "#7b8cff", "#ff5a9e"];
-  for (let i = 0; i < 14; i++) {
-    const s = 22 + Math.random() * 34, c = cols[i % cols.length];
-    box.insertAdjacentHTML("beforeend", `<svg width="${s * 1.8}" height="${s * .6}" viewBox="0 0 90 30" style="left:${Math.random() * 100}vw;top:${Math.random() * 90}vh;animation-duration:${14 + Math.random() * 16}s;animation-delay:-${Math.random() * 20}s"><rect x="1" y="1" width="88" height="28" rx="8" fill="#fff"/><circle cx="15" cy="15" r="9" fill="${c}"/><text x="15" y="19" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="12" fill="#fff">${i % 5 + 1}</text><rect x="30" y="9" width="48" height="4" rx="2" fill="${c}" opacity=".45"/><rect x="30" y="17" width="34" height="4" rx="2" fill="${c}" opacity=".45"/></svg>`);
-  }
-})();
-</script>
 </body>
 </html>
